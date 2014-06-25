@@ -1,0 +1,29 @@
+DONE
+OK: Classement et recherche des profils : via les demandes et le tree view
+OK: Stockage des documents : ok via attachés
+OK: Indexations des PDF : via attachés
+OK: Profilage des candidats et envoi de newsletter => tri par tree et export du champ email
+OK: Tableau de bord => annonces en cours / brouillon + Liens à effectuer + Demandes en cours + Graphe des demandes pour le mois + Graphe des liens pour le mois   
+OK: Formation simple
+OK: Ajout du champ entreprise dans la lise des linking
+OK: Dans linking renommer date à "date de la dernière action"
+OK: Ajout des droits pour le dashboard
+
+MUST HAVE
+Ajout d'une case à cocher "dossier conservé par entreprise"
+Ajout "créer lien" depuis candidat => problème avec apparition du lien sur entreprise et annonceur
+Depuis plusieurs endroits : cocher entreprise / candidat / annonceur
+Export des contacts pour Outlook et Android/(iPhone)
+Classement des email => boîte en imap et thunderbird en annexe
+Importation des contacts existants
+Close auto the adverts
+Remplacement du champ Fax par mobile dans contact et partner
+
+NICE TO HAVE
+Suivi des réponses aux annonces
+Réponse automatique aux emails
+Historique des mise en relations
+Historique des candidats
+Historique des entreprises
+Système de newsletter 
+  

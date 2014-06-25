@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<menuitem name="Fundraising" id="menu_fundraising" groups="fundraising_user"/>
+		<menuitem name="Fundraising" id="menu_fundraising_fundraising"
+			parent="menu_fundraising" sequence="10" />
+		<menuitem name="Configuration" id="menu_fundraising_config"
+			parent="menu_fundraising" sequence="50" />
+
+		<menuitem name="Statistiques" id="menu_fundraising_stats"
+			parent="menu_fundraising" sequence="100" />
+		
+
+	</data>
+</openerp>

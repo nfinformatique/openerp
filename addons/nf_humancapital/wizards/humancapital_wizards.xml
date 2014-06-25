@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+                <record model="ir.ui.view" id="matchquests_form">
+                        <field name="name">humancapital.matchquests.form</field>
+                        <field name="model">humancapital.matchquests</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                                <form string="Trouver les correspondances">
+<!-- 	                                <field name="vins"/>-->
+									<field name="comparison"/>
+									<field name="get_all"/>
+	                                <button icon="gtk-ok" name="match_quests" string="Trouver" type="object" />
+                                </form>
+                        </field>
+                </record>
+                
+                
+		<act_window name="Correspondances"
+        res_model="humancapital.matchquests"
+        src_model="humancapital.request"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+        id="matchquests_act_window"/>
+        
+
+                
+                <record model="ir.ui.view" id="createlinkfromcorr_form">
+                        <field name="name">humancapital.createlinkfromcorr.form</field>
+                        <field name="model">humancapital.createlinkfromcorr</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                                <form string="Créer les liens ? ">
+<!-- 	                                <field name="vins"/>-->
+	                                <button icon="gtk-ok" name="create_links" string="Créer" type="object" />
+                                </form>
+                        </field>
+                </record>
+                
+		<act_window name="Créer un lien"
+        res_model="humancapital.createlinkfromcorr"
+        src_model="humancapital.correspondance"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+        id="createlinkfromcorr_act_window"/>
+        
+	</data>
+
+</openerp>

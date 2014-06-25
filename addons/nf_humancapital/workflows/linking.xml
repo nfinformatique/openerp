@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+		<record model="workflow" id="wkf_hc_linking">
+		    <field name="name">humancapital.linking</field>
+		    <field name="osv">humancapital.linking</field>
+		    <field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_linking_d">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="flow_start">True</field>
+		    <field name="name">draft</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_d()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_linking_c">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">convened</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_c()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_linking_cs">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">convenedsurrender</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_cs()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_linking_f">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">folderpreparation</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_f()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_linking_fs">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">foldersent</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_fs()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_linking_fnok">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">foldernok</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_fnok()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_fnokf">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">foldernokinformed</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_fnokf()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_fok">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">folderok</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_fok()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_fokf">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">folderokinformed</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_fokf()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_i1">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interview1</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_i1()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_i2">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interview2</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_i2()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_i3">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interview3</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_i3()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_ienok">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interviewentreprisenok</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_ienok()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_icnok">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interviewcandidatenok</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_icnok()</field>
+		</record>
+		<record model="workflow.activity" id="hc_act_linking_iok">
+		    <field name="wkf_id" ref="wkf_hc_linking" />
+		    <field name="name">interviewok</field>
+		    <field name="kind">function</field>
+		    <field name="action">linking_iok()</field>
+		</record>
+		
+		
+		<record model="workflow.transition" id="hc_linking_transition_1">
+		    <field name="act_from" ref="hc_act_linking_d" />
+		    <field name="act_to" ref="hc_act_linking_c" />
+		    <field name="signal">hc_act_linking_c</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_2">
+		    <field name="act_from" ref="hc_act_linking_c" />
+		    <field name="act_to" ref="hc_act_linking_cs" />
+		    <field name="signal">hc_act_linking_cs</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_3">
+		    <field name="act_from" ref="hc_act_linking_c" />
+		    <field name="act_to" ref="hc_act_linking_f" />
+		    <field name="signal">hc_act_linking_f</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_4">
+		    <field name="act_from" ref="hc_act_linking_f" />
+		    <field name="act_to" ref="hc_act_linking_fs" />
+		    <field name="signal">hc_act_linking_fs</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_5">
+		    <field name="act_from" ref="hc_act_linking_fs" />
+		    <field name="act_to" ref="hc_act_linking_fnok" />
+		    <field name="signal">hc_act_linking_fnok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_6">
+		    <field name="act_from" ref="hc_act_linking_fnok" />
+		    <field name="act_to" ref="hc_act_linking_fnokf" />
+		    <field name="signal">hc_act_linking_fnokf</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_7">
+		    <field name="act_from" ref="hc_act_linking_fs" />
+		    <field name="act_to" ref="hc_act_linking_fok" />
+		    <field name="signal">hc_act_linking_fok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_8">
+		    <field name="act_from" ref="hc_act_linking_fok" />
+		    <field name="act_to" ref="hc_act_linking_fokf" />
+		    <field name="signal">hc_act_linking_fokf</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_9">
+		    <field name="act_from" ref="hc_act_linking_fokf" />
+		    <field name="act_to" ref="hc_act_linking_i1" />
+		    <field name="signal">hc_act_linking_i1</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_10">
+		    <field name="act_from" ref="hc_act_linking_i1" />
+		    <field name="act_to" ref="hc_act_linking_i2" />
+		    <field name="signal">hc_act_linking_i2</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_11">
+		    <field name="act_from" ref="hc_act_linking_i1" />
+		    <field name="act_to" ref="hc_act_linking_ienok" />
+		    <field name="signal">hc_act_linking_ienok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_12">
+		    <field name="act_from" ref="hc_act_linking_i1" />
+		    <field name="act_to" ref="hc_act_linking_icnok" />
+		    <field name="signal">hc_act_linking_icnok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_13">
+		    <field name="act_from" ref="hc_act_linking_i1" />
+		    <field name="act_to" ref="hc_act_linking_iok" />
+		    <field name="signal">hc_act_linking_iok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_14">
+		    <field name="act_from" ref="hc_act_linking_i2" />
+		    <field name="act_to" ref="hc_act_linking_i3" />
+		    <field name="signal">hc_act_linking_i3</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_15">
+		    <field name="act_from" ref="hc_act_linking_i2" />
+		    <field name="act_to" ref="hc_act_linking_ienok" />
+		    <field name="signal">hc_act_linking_ienok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_16">
+		    <field name="act_from" ref="hc_act_linking_i2" />
+		    <field name="act_to" ref="hc_act_linking_icnok" />
+		    <field name="signal">hc_act_linking_icnok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_17">
+		    <field name="act_from" ref="hc_act_linking_i2" />
+		    <field name="act_to" ref="hc_act_linking_iok" />
+		    <field name="signal">hc_act_linking_iok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_18">
+		    <field name="act_from" ref="hc_act_linking_i3" />
+		    <field name="act_to" ref="hc_act_linking_iok" />
+		    <field name="signal">hc_act_linking_iok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_19">
+		    <field name="act_from" ref="hc_act_linking_i3" />
+		    <field name="act_to" ref="hc_act_linking_icnok" />
+		    <field name="signal">hc_act_linking_icnok</field>
+		</record>
+		<record model="workflow.transition" id="hc_linking_transition_20">
+		    <field name="act_from" ref="hc_act_linking_i3" />
+		    <field name="act_to" ref="hc_act_linking_ienok" />
+		    <field name="signal">hc_act_linking_ienok</field>
+		</record>
+		
+
+
+	</data>
+</openerp>

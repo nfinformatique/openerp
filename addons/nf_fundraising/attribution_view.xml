@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.actions.act_window" id="action_attributions">
+			<field name="name">Attributions</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.attribution</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_unclosed':1}</field>
+		</record>
+
+		<menuitem name="Attributions possibles" id="menu_fundraising_attributions"
+			action="action_attributions" parent="menu_fundraising_fundraising"
+			sequence="12" />
+
+
+		<record id="view_attribution_tree" model="ir.ui.view">
+			<field name="name">nf_fundraising.attribution.tree</field>
+			<field name="model">nf_fundraising.attribution</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<tree string="Attributions">
+					<field name="name" />
+					<field name="state" />
+					<field name="total_dons" sum="Montant"/>
+					<field name="dernier_don" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_attribution_form" model="ir.ui.view">
+			<field name="name">nf_fundraising.attribution.form</field>
+			<field name="model">nf_fundraising.attribution</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<form string="Attribution" version="7.0">
+					<header>
+						<button name="state_open" type="object" states="draft"
+							string="Ouvrir" icon="gtk-convert" />
+						<button name="state_closed" type="object" states="open"
+							string="Fermer" icon="gtk-convert" />
+						<button name="state_draft" type="object" states="closed"
+							string="Mettre en brouillon" icon="gtk-convert" />
+						<button name="open_attribution_view" type="object"
+							string="Dons attribués" icon="gtk-justify-fill" />
+						
+						<field name="state" widget="statusbar" statusbar_visible="draft,open,closed" />
+
+					</header>
+					<sheet>
+						<group>
+							<field name="name"></field>
+							<field name="description"></field>
+							<!-- <field name="journal_id" /> -->
+							<field name="account_id" />
+							<field name="total_dons" />
+							<field name="dernier_don" />
+
+						</group>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+
+		<record id="view_attribution_filter" model="ir.ui.view">
+			<field name="name">nf_fundraising.attribution.select</field>
+			<field name="model">nf_fundraising.attribution</field>
+			<field name="arch" type="xml">
+
+				<search string="Search">
+					<field name="name" />
+					<filter name="unclosed" string="Non fermées" domain="[('state','!=','closed')]" />
+				</search>
+			</field>
+		</record>
+
+
+		<record id="view_attribution_gift_tree" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.attribution.tree</field>
+			<field name="model">nf_fundraising.gift.attribution</field>
+			<field name="priority" eval="20" />
+			<field name="arch" type="xml">
+				<tree string="Attributions">
+					<field name="amount" sum="Montant" />
+					<field name="partner_id" />
+					<field name="date" />
+					<field name="journal_id" />
+					<field name="solicitation_id" />
+					<field name="attribution_id" />
+					<field name="period_id" />
+					<field name="state" />
+					<field name="gift_id" />
+
+				</tree>
+			</field>
+		</record>
+
+<!-- 		<record id="view_attribution_gift_tree_ro" model="ir.ui.view"> -->
+<!-- 			<field name="name">nf_fundraising.gift.attribution.tree</field> -->
+<!-- 			<field name="model">nf_fundraising.gift.attribution</field> -->
+<!-- 			<field name="priority" eval="20" /> -->
+<!-- 			<field name="arch" type="xml"> -->
+<!-- 				<tree string="Attributions (RO)" create="false" edit="false"> -->
+<!-- 					<field name="amount" sum="Montant" /> -->
+<!-- 					<field name="partner_id" /> -->
+<!-- 					<field name="date" /> -->
+<!-- 					<field name="journal_id" /> -->
+<!-- 					<field name="solicitation_id" /> -->
+<!-- 					<field name="attribution_id" /> -->
+<!-- 					<field name="period_id" /> -->
+<!-- 					<field name="state" /> -->
+<!-- 					<field name="gift_id" /> -->
+
+<!-- 				</tree> -->
+<!-- 			</field> -->
+<!-- 		</record> -->
+		<record model="ir.ui.view" id="view_attribution_gift_tree_ro">
+			<field name="name">nf_fundraising.gift.attribution.tree.ro</field>
+			<field name="model">nf_fundraising.gift.attribution</field>
+			<field name="inherit_id" ref="view_attribution_gift_tree" />
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//tree" position="attributes">
+					    <attribute name="create">false</attribute>
+					    <attribute name="edit">false</attribute>
+   				    </xpath>
+				</data>
+			</field>
+		</record>
+				
+
+		<record id="view_attribution_gift_form" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.attribution.form</field>
+			<field name="model">nf_fundraising.gift.attribution</field>
+			<field name="priority" eval="20" />
+			<field name="arch" type="xml">
+				<form string="Attribution" version="7.0">
+					<header>
+					</header>
+					<sheet>
+						<group>
+							<field name="amount"></field>
+							<field name="attribution_id"></field>
+							<field name="partner_id" />
+							<field name="date" />
+							<field name="journal_id" />
+							<field name="solicitation_id" />
+							<field name="period_id" />
+							<field name="gift_id" />
+
+							<!-- <field name="gift_id" invisible="0"></field> -->
+						</group>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_attribution_gift_form_ro">
+			<field name="name">nf_fundraising.gift.attribution.form.ro</field>
+			<field name="model">nf_fundraising.gift.attribution</field>
+			<field name="inherit_id" ref="view_attribution_gift_form" />
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//form" position="attributes">
+					    <attribute name="create">false</attribute>
+					    <attribute name="edit">false</attribute>
+   				    </xpath>
+				</data>
+			</field>
+		</record>
+				
+		
+		<record id="view_gift_attribution_filter" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.attribution.select</field>
+			<field name="model">nf_fundraising.gift.attribution</field>
+			<field name="arch" type="xml">
+
+				<search string="Search">
+					<field name="date" />
+					<field name="partner_id" />
+					<field name="attribution_id" />
+					<field name="journal_id" />
+					<field name="solicitation_id" />
+
+					<filter name="unclosed" string="Brouillons" domain="[('state','!=','valid')]" />
+					<filter name="closed" string="Non brouillons" domain="[('state','=','valid')]" />
+
+					<group expand="0" string="Group By...">
+						<filter string="Partner" icon="terp-partner" domain="[]" name="gbypartner"
+							context="{'group_by':'partner_id'}" />
+						<filter string="Période" icon="terp-partner" domain="[]" name="gbyperiod"
+							context="{'group_by':'period_id'}" />
+						<filter string="Solicitation" icon="terp-partner" domain="[]" name="gbysolicitation"
+							context="{'group_by':'solicitation_id'}" />
+						<filter string="Journal" icon="terp-partner" domain="[]" name="gbyjournal"
+							context="{'group_by':'journal_id'}" />
+						<filter string="Attribution" icon="terp-partner" domain="[]" name="gbyattribution"
+							context="{'group_by':'attribution_id'}" />
+
+
+					</group>
+
+				</search>
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,77 @@
+<html>
+<head>
+
+<style type="text/css">
+        ${css}
+
+html,body {
+	font-family: arial,sans-serif;
+    font-size:14px ! important;
+}
+.signature{
+	clear:both;
+	margin-left:9cm;
+}
+.embedded_img{
+	float: right;
+	margin-left: 8mm;
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+	max-width: 6cm;
+}
+
+    </style>
+</head>
+<body topmargin="0px">
+    <%page expression_filter="n"/>
+    <%
+    def carriage_returns(text):
+        return text.replace('\n', '<br />')
+    %>
+    
+    %for o in objects:
+    	%for group in o.get_partner_ids():
+    		%if group['partner_id_obj'].nomail or group['partner_id_obj'].anonymous or group['partner_id_obj'].noattestation :
+				<% continue %>
+			%endif
+				    
+		    <% setLang(group['partner_id_obj'].lang) %>
+		    <div class="main_container"  style=" padding-left: 15mm;padding-right: 15mm; position: relative; padding-top: 33mm; page-break-after:always;">
+			    	
+				<div style=" position:absolute;width:73mm; height: 36mm;  top: 11mm; left: 123mm; border: 0px solid red;">
+		          ${group['partner_id_obj'].title and group['partner_id_obj'].title.name or ''|entity} <br/>
+		          ${group['partner_id_obj'].name|entity} ${group['partner_id_obj'].prenom|entity}<br/>
+		          ${group['partner_id_obj'].street|entity} <br/>
+		          ${group['partner_id_obj'].street2 and group['partner_id_obj'].street2+"<br/>" or ''|entity}
+		          ${group['partner_id_obj'].zip|entity} ${group['partner_id_obj'].city|entity}<br/>
+		          ${group['partner_id_obj'].country_id.name or ''|entity}
+				</div>    
+				
+		        ${company.city}, le ${formatLang(o.date,date=True) or ''|entity}
+				
+				
+			    <h3 style="padding-top: 7mm; margin-bottom: 1.3cm;">
+			    	%if group['partner_id_count']==1:
+				    	${o.intro_single or ''|entity} CHF ${group['amount']} 
+			    	%else:
+				    	${o.intro_multiple or ''|entity} CHF ${group['amount']} 
+				    %endif
+			    </h3>
+			    
+			    <img class="embedded_img" src="data:image/jpeg;base64,${o.image}"/>
+			    
+			    <div>
+			    	${o.main_text|n}
+			    </div>
+			    
+				<div class="signature">
+					${o.signature|n}
+				</div>
+		
+		     </div> <!-- main container -->
+		 
+	    %endfor
+ 
+    %endfor
+</body>
+</html>

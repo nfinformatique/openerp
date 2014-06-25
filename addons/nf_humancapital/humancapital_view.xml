@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <menuitem name="Human Capital" id="menu_humancapital"  icon="terp-partner" sequence="999"/>
+
+    <record model="ir.ui.view" id="view_humancapital_advert_form">
+        <field name="name">humancapital.advert.form</field>
+        <field name="model">humancapital.advert</field>
+        <field name="type">form</field> 
+        <field name="arch" type="xml">
+            <form string="humancapital.advert">
+                <field name="name" select="2"/>
+                <field name="partner_id" select="2" domain="[('advertiser','=',True)]"/>
+                <field name="request_id" select="2" domain="['|',('state','=','d'),('state','=','o')]"/>
+                <field name="date_from" select="0"/>
+                <field name="date_to" select="0"/>
+                <newline/><field name="texte" colspan="4" select="1"/>
+                
+                <group colspan="4" col="12">
+	                <field name="state" select="1" readonly="1"/>
+	                <button name="hc_advert_waiting" string="Mettre en attente" attrs="{'invisible':[('state','!=','d')]}" />
+	                <button name="hc_advert_published" string="Publier" attrs="{'invisible':[('state','!=','w')]}" />
+	                <button name="hc_advert_unpublished" string="Dépublier" attrs="{'invisible':[('state','!=','p')]}" />
+	                <button name="hc_advert_republished" string="Republier" attrs="{'invisible':[('state','!=','u')]}" />
+	                <button name="hc_advert_close" string="Fermer" attrs="{'invisible':[('state','!=','u')]}" />
+	            </group>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_humancapital_advert_tree">
+        <field name="name">humancapital.advert.tree</field>
+        <field name="model">humancapital.advert</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.advert">
+                <field name="texte"/>
+                <field name="partner_id"/>
+                <field name="request_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+
+            </tree>
+        </field>
+    </record>
+
+       <record id="view_humancapital_advert_search" model="ir.ui.view">
+           <field name="name">humancapital.advert.search</field>
+           <field name="model">humancapital.advert</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Anonces">
+                   <filter name="unclosed" icon="terp-gtk-jump-to-ltr" string="Non Fermées" domain="['|','|','|',('state','=','d'),('state','=','w'),('state','=','p'),('state','=','u')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="En attente" domain="['|',('state','=','d'),('state','=','w')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Publiées" domain="[('state','=','p')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Terminées" domain="['|',('state','=','u'),('state','=','c')]"/>
+                   <separator orientation="vertical"/>
+                   <field name="name" select="1"/>
+                   <field name="texte" select="1"/>
+                   <field name="partner_id" select="1"/>
+                   <field name="request_id" select="1"/>
+                   <newline/>
+                    <newline/>
+                    <group expand="0" string="Grouper par..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Demande" domain="[]" context="{'group_by':'request_id'}"/>
+                        <filter icon="terp-personal" string="Annonceur" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter icon="terp-personal" string="Etat" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+
+               </search>
+           </field>
+       </record>    
+       
+    <record model="ir.actions.act_window" id="action_humancapital_advert">
+        <field name="name">Annonces</field>
+        <field name="res_model">humancapital.advert</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Annonces" id="menu_humancapital_advert" action="action_humancapital_advert" parent="menu_humancapital" sequence="999"/>
+
+        
+    <record model="ir.ui.view" id="view_humancapital_request_form">
+        <field name="name">humancapital.request.form</field>
+        <field name="model">humancapital.request</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.request">
+			                <field name="name" select="1" colspan="4"/>
+			                <field name="partner_id" select="1" colspan="4" domain="[('entreprise','=',True)]"/>
+		                
+			                <field name="knownlanguages" select="1"/>
+			                <field name="approxlanguages" select="1"/>
+							<newline/>
+			                <field name="fix_knownlanguages" select="1" />
+			                <field name="fix_approxlanguages" select="1"/>
+							<newline/>
+							
+			                <field name="sectors" select="1"/>
+			                <field name="functions" select="1"/>
+							<newline/>
+			                <field name="fix_sectors" select="1" />
+			                <field name="fix_functions" select="1"/>
+							<newline/>
+							
+			                <field name="formations" select="1"/>
+			                <field name="workpermits" select="1"/>
+							<newline/>
+			                <field name="fix_formations" select="1" />
+			                <field name="fix_workpermits" select="1" />
+							<newline/>
+							
+			                <field name="contracttypes" select="1"/>
+			                <field name="nationalities" select="1"/>
+							<newline/>
+			                <field name="fix_contracttypes" select="1" />
+			                <field name="fix_nationalities" select="1" />
+							<newline/>
+			                
+			                <field name="age_min" select="1"/>
+			                <field name="age_max" select="1"/>
+			                <field name="fix_age" select="1"/>
+							<newline/>
+			                <field name="experience" select="1"/>
+							<newline/>
+			                <field name="fix_experience" select="1"/>
+							<newline/>
+							
+			                <field name="notes" widget="text_html" select="1" colspan="4"/>
+			                
+			                <group colspan="4" col="12">
+				                <field name="state" select="1" readonly="1"/>
+				                <button name="hc_request_ongoing" string="Valider" attrs="{'invisible':[('state','!=','d')]}" />
+				                <button name="hc_request_won" string="Gagnée" attrs="{'invisible':[('state','!=','o')]}" />
+				                <button name="hc_request_lost" string="Perdue" attrs="{'invisible':[('state','!=','o')]}" />
+				                <button name="hc_request_surrender" string="Abandonnée" attrs="{'invisible':[('state','!=','o')]}" />
+				                <button name="hc_request_desurrender" string="Réactiver" attrs="{'invisible':[('state','!=','s')]}" />
+				                <button name="hc_request_delost" string="Réactiver" attrs="{'invisible':[('state','!=','l')]}" />
+				                <button name="hc_request_dewon" string="Réactiver" attrs="{'invisible':[('state','!=','w')]}" />
+				            </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_request_tree">
+        <field name="name">humancapital.request.tree</field>
+        <field name="model">humancapital.request</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.request" colors="blue:state==draft">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+       <record id="view_humancapital_request_search" model="ir.ui.view">
+           <field name="name">humancapital.request.search</field>
+           <field name="model">humancapital.request</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Demandes">
+                   <filter name="ongoing" icon="terp-gtk-jump-to-ltr" string="En cours" domain="['|',('state','=','o'),('state','=','d')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Gagnés" domain="[('state','=','w')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Perdus" domain="[('state','=','l')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Abandonnées" domain="[('state','=','s')]"/>
+                   <separator orientation="vertical"/>
+                   <field name="name" select="1"/>
+                   <field name="partner_id" select="1"/>
+                   <newline/>
+                    <group expand="0" string="Avancé..." colspan="8" col="6">
+			                <field name="knownlanguages" select="2"/>
+			                <field name="approxlanguages" select="2"/>
+			                <field name="sectors" select="2"/>
+			                <field name="functions" select="2"/>
+			                <field name="formations" select="2"/>
+			                <field name="workpermits" select="2"/>
+		                    <newline/>
+			                <field name="contracttypes" select="2"/>
+			                <field name="nationalities" select="2"/>
+			                <field name="age_min" select="2"/>
+			                <field name="age_max" select="2"/>
+			                <field name="experience" select="2"/>
+			                <field name="notes" widget="text_html" select="2" colspan="4"/>
+                   </group>
+                    <newline/>
+                    <group expand="0" string="Grouper par..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Entreprise" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter icon="terp-personal" string="Etat" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+
+               </search>
+           </field>
+       </record>    
+    
+    <record model="ir.actions.act_window" id="action_humancapital_request">
+        <field name="name">Demandes</field>
+        <field name="res_model">humancapital.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+<!--         <field name="domain">[('candidate','=',True)]</field>-->
+		<field name="context">{'search_default_ongoing':1}</field>
+        <field name="view_id" ref="view_humancapital_request_tree" />
+        <field name="search_view_id" ref="view_humancapital_request_search" />
+    </record>
+    <menuitem name="Demandes" id="menu_humancapital_request" action="action_humancapital_request" parent="menu_humancapital" sequence="10"/>
+
+        
+<!--    <record model="ir.ui.view" id="view_res_partner_form">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="res.partner">
+                <field name="candidate" select="1"/>
+                <field name="advertiser" select="2"/>
+                <field name="requester" select="0"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_res_partner_tree">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="res.partner">
+                <field name="candidate"/>
+                <field name="advertiser"/>
+                <field name="requester"/>
+
+            </tree>
+        </field>
+    </record>
+     <record model="ir.actions.act_window" id="action_res_partner">
+        <field name="name">res_partner</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Unknown/res_partner" id="menu_res_partner" action="action_res_partner"/>-->
+
+<!--        
+    <record model="ir.ui.view" id="view_humancapital_quest_form">
+        <field name="name">humancapital.quest.form</field>
+        <field name="model">humancapital.quest</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.quest">
+                <field name="partner_id" select="1"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_quest_tree">
+        <field name="name">humancapital.quest.tree</field>
+        <field name="model">humancapital.quest</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.quest">
+                <field name="partner_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_quest">
+        <field name="name">Candidatures</field>
+        <field name="res_model">humancapital.quest</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Candidatures" id="menu_humancapital_quest" action="action_humancapital_quest" parent="menu_humancapital" sequence="15"/>-->
+
+        
+    <record model="ir.ui.view" id="view_humancapital_linking_form">
+        <field name="name">humancapital.linking.form</field>
+        <field name="model">humancapital.linking</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.linking">
+                <field name="request_id" select="0"/>
+                <field name="candidate_id" select="0" domain="[('candidate','=',True)]"/>
+                <field name="negotiatedsalary" select="1"/>
+                <field name="commission" select="2"/>
+                <field name="date_conclusion" select="0"/>
+                <group colspan="4" col="20">
+	                <field name="state" select="1" readonly="1"/>
+	                <button name="hc_act_linking_c" string="Convoqué" attrs="{'invisible':[('state','!=','d')]}" />
+	                <button name="hc_act_linking_f" string="Dossier en prép." attrs="{'invisible':[('state','!=','c')]}" />
+	                <button name="hc_act_linking_cs" string="Abandon" attrs="{'invisible':[('state','!=','c')]}" />
+	                <button name="hc_act_linking_fs" string="Dossier envoyé" attrs="{'invisible':[('state','!=','f')]}" />
+	                <button name="hc_act_linking_fok" string="Dossier accepté" attrs="{'invisible':[('state','!=','fs')]}" />
+	                <button name="hc_act_linking_fokf" string="Candidat informé" attrs="{'invisible':[('state','!=','fok')]}" />
+	                <button name="hc_act_linking_fnok" string="Dossier refusé" attrs="{'invisible':[('state','!=','fs')]}" />
+	                <button name="hc_act_linking_fnokf" string="Candidat informé" attrs="{'invisible':[('state','!=','fnok')]}" />
+	                <button name="hc_act_linking_i1" string="1er entretien" attrs="{'invisible':[('state','!=','fokf')]}" />
+	                <button name="hc_act_linking_iok" string="Gagné !" attrs="{'invisible':[('state','!=','i1'),('state','!=','i2'),('state','!=','i3')]}" />
+	                <button name="hc_act_linking_i2" string="2eme entretien" attrs="{'invisible':[('state','!=','i1')]}" />
+	                <button name="hc_act_linking_i3" string="3eme entretien" attrs="{'invisible':[('state','!=','i2')]}" />
+	                <button name="hc_act_linking_ienok" string="Refus de l'entreprise" attrs="{'invisible':[('state','!=','i1'),('state','!=','i2'),('state','!=','i3')]}" />
+	                <button name="hc_act_linking_icnok" string="Refus du candidat" attrs="{'invisible':[('state','!=','i1'),('state','!=','i2'),('state','!=','i3')]}" />
+	            </group>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_linking_tree">
+        <field name="name">humancapital.linking.tree</field>
+        <field name="model">humancapital.linking</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.linking">
+                <field name="negotiatedsalary"/>
+                <field name="commission"/>
+                <field name="date_conclusion"/>
+                <field name="request_id"/>
+                <field name="candidate_id"/>
+                <field name="entreprise_id"></field>
+                <field name="state"/>
+
+            </tree>
+        </field>
+    </record>
+
+       <record id="view_humancapital_linking_search" model="ir.ui.view">
+           <field name="name">humancapital.linking.search</field>
+           <field name="model">humancapital.linking</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Liens">
+                   <filter name="linkingongoing" icon="terp-gtk-jump-to-ltr" string="En cours" domain="[('state','!=','cs'),('state','!=','fnokf'),('state','!=','ienok'),('state','!=','icnok'),('state','!=','iok')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Action requise" domain="['|','|','|',('state','=','d'),('state','=','f'),('state','=','fnok'),('state','=','fok')]"/>
+                   <separator orientation="vertical"/>
+                   <field name="request_id" select="1"/>
+                   <field name="candidate_id" select="1"/>
+                    <newline/>
+                    <group expand="0" string="Grouper par..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Demande" domain="[]" context="{'group_by':'request_id'}"/>
+                        <filter icon="terp-personal" string="Candidat" domain="[]" context="{'group_by':'candidate_id'}"/>
+                        <filter icon="terp-personal" string="Etat" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+
+               </search>
+           </field>
+       </record>    
+    <record model="ir.actions.act_window" id="action_humancapital_linking">
+        <field name="name">Linking</field>
+        <field name="res_model">humancapital.linking</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+		<field name="context">{'search_default_linkingongoing':1}</field>
+    </record>
+    <menuitem name="Linking" id="menu_humancapital_linking" action="action_humancapital_linking"  parent="menu_humancapital" sequence="20"/>
+
+        
+<!--     <record model="ir.ui.view" id="view_crm_case_form">
+        <field name="name">crm_case.form</field>
+        <field name="model">crm_case</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="crm_case">
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_crm_case_tree">
+        <field name="name">crm_case.tree</field>
+        <field name="model">crm_case</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="crm_case">
+
+            </tree>
+        </field>
+    <record>
+    <record model="ir.actions.act_window" id="action_crm_case">
+        <field name="name">crm_case</field>
+        <field name="res_model">crm_case</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Unknown/crm_case" id="menu_crm_case" action="action_crm_case"/>-->
+
+        
+    <record model="ir.ui.view" id="view_humancapital_entreprise_form">
+        <field name="name">humancapital.entreprise.form</field>
+        <field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="priority" eval="199"/>
+        
+        <field name="arch" type="xml">
+        	<data>
+				<xpath expr="/form/notebook/page[@string='History']" position="replace">
+                </xpath>
+				<xpath expr="/form/notebook/page[@string='Sales &amp; Purchases']" position="replace">
+                </xpath>
+                <field name="fax" position="replace"><field name="mobile"></field></field>
+                <field name="customer" position="replace"></field>
+                <field name="supplier" position="replace"></field>
+                <field name="title" position="replace"></field>
+                <field name="lang" position="after">
+			                <field name="candidate" select="1" invisible="0" readonly="1"/>
+			                <field name="advertiser" select="1" invisible="0" readonly="1"/>
+			                <field name="entreprise" select="1" invisible="0" readonly="1"/>
+                </field>
+                
+	         	<notebook position="inside">
+	        		<page string="Human Capital">
+	        			<group  attrs="{'invisible':[('candidate','=',False)]}">
+			        		<separator string="Candidat" colspan="4"/>
+			                <field name="knownlanguages" select="1"/>
+			                <field name="approxlanguages" select="1"/>
+			                <field name="sectors" select="1"/>
+			                <field name="functions" select="1"/>
+			                <field name="formations" select="1"/>
+			                <field name="workpermits" select="1"/>
+			                <field name="contracttypes" select="1"/>
+			                <field name="nationalities" select="1"/>
+			                <field name="birthdate" select="1"/>
+			                <field name="experience" select="1"/>
+						                
+			                <group colspan="4" col="12">
+				                <field name="candidate_state" select="1" readonly="1"/>
+				                <button name="hc_candidate_questing" string="Ouvrir" attrs="{'invisible':[('candidate_state','!=','n')]}" />
+				                <button name="hc_candidate_employedviachrysalys" string="Engagé via Chrysalys" attrs="{'invisible':[('candidate_state','!=','q')]}" />
+				                <button name="hc_candidate_employedviaother" string="Engagé par tiers" attrs="{'invisible':[('candidate_state','!=','q')]}" />
+				                <button name="hc_candidate_surrender" string="Abandon" attrs="{'invisible':[('candidate_state','!=','q')]}" />
+				                <button name="hc_candidate_requesting" string="Réouvrir" attrs="{'invisible':[('candidate_state','!=','c'),('candidate_state','!=','t'),('candidate_state','!=','s')]}" />
+				            </group>
+				            
+						</group>
+						<group attrs="{'invisible':[('entreprise','=',False)]}">
+			        		<separator string="Entreprise" colspan="4" />
+			                <field name="agreement" select="1" attrs="{'invisible':[('entreprise','=',False)]}"/>
+			                <field name="entreprisesectors" colspan="4" select="2"  attrs="{'invisible':[('entreprise','=',False),('candidate','=',False)]}"/>
+			                <field name="activityregions" colspan="4" select="0"  attrs="{'invisible':[('entreprise','=',False),('candidate','=',False)]}"/>
+			                <field name="entreprise_state" select="0" readonly="1" attrs="{'invisible':[('entreprise','=',False)]}"/>
+			                <group colspan="1" col="6">
+				                <button name="hc_entreprise_activate" string="Activer" attrs="{'invisible':[('entreprise_state','!=','p')]}" />
+				                <button name="hc_entreprise_inactivate" string="Désactiver" attrs="{'invisible':[('entreprise_state','!=','a')]}" />
+				                <button name="hc_entreprise_reactivate" string="Réactiver" attrs="{'invisible':[('entreprise_state','!=','i')]}" />
+			                </group>
+						</group>
+						<group  attrs="{'invisible':[('advertiser','=',False)]}">
+			        		<separator string="Annonceur" colspan="4"  />
+			        	</group>
+					</page>
+				</notebook>
+			</data>	            
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_entreprise_tree">
+        <field name="name">humancapital.entreprise.tree</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.entreprise">
+                <field name="name"/>
+                <field name="ref"/>
+                <field name="agreement"/>
+                <field name="entreprise_state"/>
+                <field name="sectors"/>
+                <field name="activityregions"/>
+
+            </tree>
+        </field>
+    </record>
+        <record id="view_humancapital_entreprise_search" model="ir.ui.view">
+            <field name="name">humancapital.entreprise.search</field>
+            <field name="model">res.partner</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Entreprises">
+                    <filter icon="terp-gtk-jump-to-ltr" string="Prospecting" domain="[('entreprise_state','=','p')]"/>
+                    <separator orientation="vertical"/>
+                    <field name="name" select="1"/>
+                    <field name="ref" select="1"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Etat" domain="[]" context="{'group_by':'entreprise_state'}"/>
+                        <filter icon="terp-folder-blue" string="Agreement" domain="[]" context="{'group_by':'agreement'}"/>
+<!--                         <filter icon="terp-personal" string="Secteur" domain="[]" context="{'group_by':'sectors'}"/>
+                        <filter icon="terp-personal+" string="Région" domain="[]" context="{'group_by':'activityregions'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+    
+    
+    <record model="ir.actions.act_window" id="action_humancapital_entreprise">
+        <field name="name">Entreprises</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_entreprise':True}</field>
+        <field name="domain">[('entreprise','=',True)]</field>
+        <field name="view_id" ref="view_humancapital_entreprise_tree" />
+        <field name="search_view_id" ref="view_humancapital_entreprise_search" />
+    </record>
+    <menuitem name="Entreprises" id="menu_humancapital_entreprise" action="action_humancapital_entreprise"  parent="menu_humancapital" sequence="50"/>
+
+    <menuitem name="Configuration" id="menu_humancapital_conf"  parent="menu_humancapital" sequence="999"/>
+        
+    <record model="ir.ui.view" id="view_humancapital_regions_form">
+        <field name="name">humancapital.regions.form</field>
+        <field name="model">humancapital.regions</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.regions">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_regions_tree">
+        <field name="name">humancapital.regions.tree</field>
+        <field name="model">humancapital.regions</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.regions">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_regions">
+        <field name="name">Régions</field>
+        <field name="res_model">humancapital.regions</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Régions" id="menu_humancapital_regions" action="action_humancapital_regions" parent="menu_humancapital_conf" sequence="999"/>
+
+    <record model="ir.ui.view" id="view_humancapital_comparison_form">
+        <field name="name">humancapital.comparison.form</field>
+        <field name="model">humancapital.comparison</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Barêmes">
+                <field name="name" select="1" colspan="4"/>
+                <field name="description" select="2" colspan="4"/>
+                <separator colspan="4" string="Valeur des comparaisons" />
+                <field name="knownlanguages" select="1"/>
+                <field name="approxlanguages" select="1"/>
+                <field name="sectors" select="1"/>
+                <field name="functions" select="1"/>
+                <field name="formations" select="1"/>
+                <field name="workpermits" select="1"/>
+                <field name="contracttypes" select="1"/>
+                <field name="nationalities" select="1"/>
+                <field name="age_min" select="1"/>
+                <field name="experience" select="1"/>
+ 
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_comparison_tree">
+        <field name="name">humancapital.comparison.tree</field>
+        <field name="model">humancapital.comparison</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Barêmes">
+                <field name="name"/>
+ 
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_comparison">
+        <field name="name">Barêmes</field>
+        <field name="res_model">humancapital.comparison</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Barêmes" id="menu_humancapital_comparison" action="action_humancapital_comparison" parent="menu_humancapital_conf" sequence="999"/>
+
+
+
+
+    <record model="ir.ui.view" id="view_humancapital_correspondance_form">
+        <field name="name">humancapital.correspondance.form</field>
+        <field name="model">humancapital.correspondance</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Correspondances">
+                <field name="request_id" select="1" colspan="4" readonly="1"/>
+                <field name="candidate_id" select="1" colspan="4" readonly="1"/>
+                <field name="score" select="1" colspan="4" readonly="1"/>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_correspondance_tree">
+        <field name="name">humancapital.correspondance.tree</field>
+        <field name="model">humancapital.correspondance</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Correspondances">
+                <field name="request_id" select="1" colspan="4" readonly="1"/>
+                <field name="candidate_id" select="1" colspan="4" readonly="1"/>
+                <field name="score" select="1" colspan="4" readonly="1"/>
+ 
+            </tree>
+        </field>
+    </record>
+
+
+
+
+    <record model="ir.ui.view" id="view_humancapital_languages_form">
+        <field name="name">humancapital.languages.form</field>
+        <field name="model">humancapital.languages</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Langues">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_languages_tree">
+        <field name="name">humancapital.languages.tree</field>
+        <field name="model">humancapital.languages</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Langues">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_languages">
+        <field name="name">Langues</field>
+        <field name="res_model">humancapital.languages</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Langues" id="menu_humancapital_languages" action="action_humancapital_languages" parent="menu_humancapital_conf" sequence="999"/>
+        
+    <record model="ir.ui.view" id="view_humancapital_functions_form">
+        <field name="name">humancapital.functions.form</field>
+        <field name="model">humancapital.functions</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Fonctions">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_functions_tree">
+        <field name="name">humancapital.functions.tree</field>
+        <field name="model">humancapital.functions</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Fonctions">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_functions">
+        <field name="name">Fonctions</field>
+        <field name="res_model">humancapital.functions</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Fonctions" id="menu_humancapital_functions" action="action_humancapital_functions" parent="menu_humancapital_conf" sequence="999"/>
+    
+    
+      <record model="ir.ui.view" id="view_humancapital_formations_form">
+        <field name="name">humancapital.formations.form</field>
+        <field name="model">humancapital.formations</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Formations">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_formations_tree">
+        <field name="name">humancapital.formations.tree</field>
+        <field name="model">humancapital.formations</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Formations">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_formations">
+        <field name="name">Formations</field>
+        <field name="res_model">humancapital.formations</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Formations" id="menu_humancapital_formations" action="action_humancapital_formations" parent="menu_humancapital_conf" sequence="999"/>
+    
+     <record model="ir.ui.view" id="view_humancapital_workpermits_form">
+        <field name="name">humancapital.workpermits.form</field>
+        <field name="model">humancapital.workpermits</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Permis de travail">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_workpermits_tree">
+        <field name="name">humancapital.workpermits.tree</field>
+        <field name="model">humancapital.workpermits</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Permis de travail">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_workpermits">
+        <field name="name">Permis de travail</field>
+        <field name="res_model">humancapital.workpermits</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Permis de travail" id="menu_humancapital_workpermits" action="action_humancapital_workpermits" parent="menu_humancapital_conf" sequence="999"/>
+    
+     <record model="ir.ui.view" id="view_humancapital_contracttypes_form">
+        <field name="name">humancapital.contracttypes.form</field>
+        <field name="model">humancapital.contracttypes</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Types de contrat">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_contracttypes_tree">
+        <field name="name">humancapital.contracttypes.tree</field>
+        <field name="model">humancapital.contracttypes</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Types de contrat">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_contracttypes">
+        <field name="name">Types de contrat</field>
+        <field name="res_model">humancapital.contracttypes</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Types de contrat" id="menu_humancapital_contracttypes" action="action_humancapital_contracttypes" parent="menu_humancapital_conf" sequence="999"/>
+
+     <record model="ir.ui.view" id="view_humancapital_nationalities_form">
+        <field name="name">humancapital.nationalities.form</field>
+        <field name="model">humancapital.nationalities</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Nationalités">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_nationalities_tree">
+        <field name="name">humancapital.nationalities.tree</field>
+        <field name="model">humancapital.nationalities</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Nationalités">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_nationalities">
+        <field name="name">Nationalités</field>
+        <field name="res_model">humancapital.nationalities</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Nationalités" id="menu_humancapital_nationalities" action="action_humancapital_nationalities" parent="menu_humancapital_conf" sequence="999"/>
+
+
+<!--    <record model="ir.ui.view" id="view_humancapital_advertiser_form">
+        <field name="name">humancapital.advertiser.form</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.advertiser">
+
+            </form>
+        </field>
+    </record>-->
+    <record model="ir.ui.view" id="view_humancapital_advertiser_tree">
+        <field name="name">humancapital.advertiser.tree</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.advertiser">
+                <field name="name" select="1"/>
+                <field name="ref" select="1"/>
+
+            </tree>
+        </field>
+    </record>
+        <record id="view_humancapital_advertiser_search" model="ir.ui.view">
+            <field name="name">humancapital.advertiser.search</field>
+            <field name="model">res.partner</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Annonceurs">
+                    <field name="name" select="1"/>
+                    <field name="ref" select="1"/>
+                </search>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="action_humancapital_advertiser">
+        <field name="name">Annonceurs</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_advertiser':True}</field>
+        <field name="domain">[('advertiser','=',True)]</field>
+        <field name="view_id" ref="view_humancapital_advertiser_tree" />
+        <field name="search_view_id" ref="view_humancapital_advertiser_search" />
+    </record>
+    <menuitem name="Annonceurs" id="menu_humancapital_advertiser" action="action_humancapital_advertiser" parent="menu_humancapital_conf" sequence="999"/>
+        
+<!--     <record model="ir.ui.view" id="view_humancapital_candidate_form">
+        <field name="name">humancapital.candidate.form</field>
+        <field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<notebook position="inside">
+        	       	      
+        		<page string="HC Candidats">
+        		</page>
+        	</notebook>
+        </field>
+    </record>-->
+    
+    <record model="ir.ui.view" id="view_humancapital_candidate_tree">
+        <field name="name">humancapital.candidate.tree</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.candidate">
+                <field name="name" select="1"/>
+                <field name="ref" select="1"/>
+                <field name="origin"/>
+                <field name="candidate_state"/>
+
+            </tree>
+        </field>
+    </record>
+    
+       <record id="view_humancapital_candidate_search" model="ir.ui.view">
+           <field name="name">humancapital.candidate.search</field>
+           <field name="model">res.partner</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Candidats">
+                   <filter icon="terp-gtk-jump-to-ltr" string="Nouveaux" domain="[('candidate_state','=','n')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="En recherche" domain="[('candidate_state','=','q')]"/>
+                   <separator orientation="vertical"/>
+                   <field name="name" select="1"/>
+                   <field name="ref" select="1"/>
+                   <field name="text_search" select="1"/>
+                    <newline/>
+                    <group expand="0" string="Grouper par..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Origine" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter icon="terp-personal" string="Etat" domain="[]" context="{'group_by':'candidate_state'}"/>
+                    </group>
+               </search>
+           </field>
+       </record>    
+        
+     <record model="ir.actions.act_window" id="action_humancapital_candidate">
+        <field name="name">Candidats</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_candidate':True}</field>
+        <field name="domain">[('candidate','=',True)]</field>
+        <field name="view_id" ref="view_humancapital_candidate_tree" />
+        <field name="search_view_id" ref="view_humancapital_candidate_search" />
+    </record>
+    <menuitem name="Candidats" id="menu_humancapital_candidate" action="action_humancapital_candidate" parent="menu_humancapital" sequence="15"/>
+
+        
+    <record model="ir.ui.view" id="view_humancapital_sectors_form">
+        <field name="name">humancapital.sectors.form</field>
+        <field name="model">humancapital.sectors</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.sectors">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_sectors_tree">
+        <field name="name">humancapital.sectors.tree</field>
+        <field name="model">humancapital.sectors</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.sectors">
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_sectors">
+        <field name="name">Secteurs</field>
+        <field name="res_model">humancapital.sectors</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Secteurs" id="menu_humancapital_sectors" action="action_humancapital_sectors" parent="menu_humancapital_conf" sequence="999"/>
+
+        
+    <record model="ir.ui.view" id="view_humancapital_origin_form">
+        <field name="name">humancapital.origin.form</field>
+        <field name="model">humancapital.origin</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="humancapital.origin">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+                <field name="description" colspan="4" select="0"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_humancapital_origin_tree">
+        <field name="name">humancapital.origin.tree</field>
+        <field name="model">humancapital.origin</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="humancapital.origin">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_humancapital_origin">
+        <field name="name">Origines</field>
+        <field name="res_model">humancapital.origin</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Origines" id="menu_humancapital_origin" action="action_humancapital_origin"  parent="menu_humancapital_conf" sequence="999"/>
+
+<!--  Right Links -->
+
+	    <act_window
+        id="act_humancapital_ent_requests" 
+        name="Demandes en cours"
+        context="{'search_default_ongoing':1}"
+        domain="[('partner_id','=',active_id)]"
+        src_model="res.partner"
+        res_model="humancapital.request"
+        />
+
+	    <act_window
+        id="act_humancapital_requests_global" 
+        name="Demandes en cours"
+        context="{'search_default_ongoing':1}"
+        domain="['|',('state','=','o'),('state','=','d')]"
+        src_model="res.partner"
+        res_model="humancapital.request"
+        />
+
+
+
+	    <act_window
+        id="act_humancapital_request_linking" 
+        name="Liens en cours"
+        context="{'search_default_linkingongoing':1}"
+        domain="[('request_id','=',active_id)]"
+        src_model="humancapital.request"
+        res_model="humancapital.linking"
+        />
+
+	    <act_window
+        id="act_humancapital_candidate_linking" 
+        name="Liens en cours"
+        context="{'search_default_linkingongoing':1}"
+        domain="[('candidate_id','=',active_id)]"
+        src_model="res.partner"
+        res_model="humancapital.linking"
+        />
+
+	    <act_window
+        id="act_humancapital_linking_global" 
+        name="Liens en cours"
+        context="{'search_default_linkingongoing':1}"
+        domain="[('state','!=','cs'),('state','!=','fnokf'),('state','!=','ienok'),('state','!=','icnok'),('state','!=','iok')]"
+        src_model="res.partner"
+        res_model="humancapital.linking"
+        />
+
+	    <act_window
+        id="act_humancapital_advertiser_advert" 
+        name="Annonces en cours"
+        context="{'search_default_unclosed':1}"
+        domain="[('partner_id','=',active_id)]"
+        src_model="res.partner"
+        res_model="humancapital.advert"
+        />
+        
+	    <act_window
+        id="act_humancapital_request_advert" 
+        name="Annonces en cours"
+        context="{'search_default_unclosed':1}"
+        domain="[('request_id','=',active_id)]"
+        src_model="humancapital.request"
+        res_model="humancapital.advert"
+        />
+
+	    <act_window
+        id="act_humancapital_advert_global" 
+        name="Annonces en cours"
+        context="{'search_default_unclosed':1}"
+        domain="[]"
+        res_model="humancapital.advert"
+        />
+
+		<delete model="ir.values" search="[('name', '=', 'act_res_partner_event')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Open Jobs'),('res_model','=','res.partner')]"/>
+
+		<delete model="ir.values" search="[('name', '=', 'action_partner_sms_send')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'SMS Send'),('res_model','=','partner.sms.send')]"/>
+		
+		<delete model="ir.values" search="[('name', '=', 'action_partner_mass_mail')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Mass Mailing'),('res_model','=','partner.wizard.spam')]"/>
+		
+		<delete model="ir.values" search="[('name', '=', 'act_res_partner_emails')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Emails'),('res_model','=','mailgate.message')]"/>
+
+		<delete model="ir.values" search="[('name', '=', 'crm_partner2opportunity')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Create Opportunity'),('res_model','=','crm.partner2opportunity')]"/>
+        
+		<delete model="ir.values" search="[('name', '=', 'crm_case_categ_meet_create_partner')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Schedule a Meeting'),('res_model','=','crm.meeting')]"/>
+
+		<delete model="ir.values" search="[('name', '=', 'crm_case_categ_phone_create_partner')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Schedule Phone Call'),('res_model','=','crm.phonecall')]"/>
+
+		<delete model="ir.values" search="[('name', '=', 'act_res_partner_jobs')]"/>
+		<delete model="ir.actions.act_window" search="[('name', '=', 'Open Jobs'),('res_model','=','res.partner.job')]"/>
+
+</data>
+</openerp>

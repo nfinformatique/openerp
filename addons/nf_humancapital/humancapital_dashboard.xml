@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <openerp>
+     <data>
+        
+	<act_window
+		id="act_humancapital_linkings_graph"
+			name="Liens par état"
+			res_model="humancapital.linking.report"
+			view_type="form"
+	        context="{'search_default_30days':1}"
+			view_mode="graph,tree"
+    	    domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-30)).strftime('%Y-%m-%d') )]"
+		/>
+
+
+    <record model="ir.ui.view" id="view_humancapital_report_linking_tree">
+        <field name="name">humancapital.linking.report.tree</field>
+        <field name="model">humancapital.linking.report</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Liens" >
+                <field name="create_date"/>
+                <field name="state"/>
+                <field name="candidate_id"/>
+                <field name="request_id"/>
+                <field name="date_conclusion"/>
+            </tree>
+        </field>
+    </record>
+    
+    
+ 	<record model="ir.ui.view" id="view_humancapital_report_linking_graph">
+	   <field name="name">humancapital.linking.report.graph</field>
+	   <field name="model">humancapital.linking.report</field>
+	   <field name="type">graph</field>
+	   <field name="arch" type="xml">
+	         <graph string="Requests" type="bar" >
+ 	              <field name="state"/>
+ 	              <field name="nbr" operator="+"/>
+	        </graph>
+	    </field>
+	</record>
+	
+       <record id="view_humancapital_report_linking_search" model="ir.ui.view">
+           <field name="name">humancapital.linking.report.search</field>
+           <field name="model">humancapital.linking.report</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Liens">
+                   <filter name="currentmonth" icon="terp-gtk-jump-to-ltr" string="Mois en cours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,day=1)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="lastmonth" icon="terp-gtk-jump-to-ltr" string="Mois passé" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=-1,day=1)).strftime('%%Y-%%m-%%d') ),('create_date','&lt;=',(datetime.date.today()+relativedelta(months=-1,day=31)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="30days" icon="terp-gtk-jump-to-ltr" string="30 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-30)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="60days" icon="terp-gtk-jump-to-ltr" string="60 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-60)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="90days" icon="terp-gtk-jump-to-ltr" string="90 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-90)).strftime('%%Y-%%m-%%d') )]"/>
+               </search>
+           </field>
+       </record>        
+
+
+
+
+	<act_window
+		id="act_humancapital_requests_graph"
+			name="Demandes par état"
+			res_model="humancapital.request.report"
+			view_type="form"
+	        context="{'search_default_30days':1}"
+			view_mode="graph,tree"
+    	    domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-30)).strftime('%Y-%m-%d') )]"
+		/>
+<!--  			view_id="view_humancapital_report_request_graph"
+ -->
+
+    <record model="ir.ui.view" id="view_humancapital_report_request_tree">
+        <field name="name">humancapital.request.report.tree</field>
+        <field name="model">humancapital.request.report</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Demandes" >
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="state"/>
+                <field name="partner_id"/>
+                <field name="linkings"/>
+                <field name="correspondances"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_humancapital_report_request_form">
+        <field name="name">humancapital.request.report.form</field>
+        <field name="model">humancapital.request.report</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Demandes" >
+                <field name="name"/>
+
+            </form>
+        </field>
+    </record>
+    
+ 	<record model="ir.ui.view" id="view_humancapital_report_request_graph">
+	   <field name="name">humancapital.request.report.graph</field>
+	   <field name="model">humancapital.request.report</field>
+	   <field name="type">graph</field>
+	   <field name="arch" type="xml">
+	         <graph string="Requests" >
+ 	              <field name="state"/>
+ 	              <field name="nbr" operator="+"/>
+	        </graph>
+	    </field>
+	</record>
+	
+       <record id="view_humancapital_report_request_search" model="ir.ui.view">
+           <field name="name">humancapital.request.report.search</field>
+           <field name="model">humancapital.request.report</field>
+           <field name="type">search</field>
+           <field name="arch" type="xml">
+               <search string="Liens">
+                   <filter name="currentmonth" icon="terp-gtk-jump-to-ltr" string="Mois en cours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,day=1)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="lastmonth" icon="terp-gtk-jump-to-ltr" string="Mois passé" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=-1,day=1)).strftime('%%Y-%%m-%%d') ),('create_date','&lt;=',(datetime.date.today()+relativedelta(months=-1,day=31)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="30days" icon="terp-gtk-jump-to-ltr" string="30 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-30)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="60days" icon="terp-gtk-jump-to-ltr" string="60 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-60)).strftime('%%Y-%%m-%%d') )]"/>
+                   <filter name="90days" icon="terp-gtk-jump-to-ltr" string="90 derniers jours" domain="[('create_date','>=',(datetime.date.today()+relativedelta(months=0,days=-90)).strftime('%%Y-%%m-%%d') )]"/>
+<!--                    <filter name="linkingongoing" icon="terp-gtk-jump-to-ltr" string="En cours" domain="[('state','!=','cs'),('state','!=','fnokf'),('state','!=','ienok'),('state','!=','icnok'),('state','!=','iok')]"/>
+                   <filter icon="terp-gtk-jump-to-ltr" string="Action requise" domain="['|','|','|',('state','=','d'),('state','=','f'),('state','=','fnok'),('state','=','fok')]"/>
+                   <separator orientation="vertical"/>
+                   <field name="request_id" select="1"/>
+                   <field name="candidate_id" select="1"/>
+                    <newline/>
+                    <group expand="0" string="Grouper par..." colspan="8" col="6">
+                        <filter icon="terp-folder-blue" string="Demande" domain="[]" context="{'group_by':'request_id'}"/>
+                        <filter icon="terp-personal" string="Candidat" domain="[]" context="{'group_by':'candidate_id'}"/>
+                        <filter icon="terp-personal" string="Etat" domain="[]" context="{'group_by':'state'}"/>
+                    </group>-->
+
+               </search>
+           </field>
+       </record>        
+
+
+
+        <record model="ir.ui.view" id="humancapital_maindashboard_form">
+            <field name="name">humancapital.maindashboard.form</field>
+             <field name="model">board.board</field>
+             <field name="type">form</field>
+             <field name="arch" type="xml">
+                <form string="HUman Capital Board">
+                     <hpaned position="100">
+                        <child1>
+                            <action
+                                string="Annonces en cours"
+                                name="%(humancapital.act_humancapital_advert_global)d"
+                                view_mode="tree,form"/>
+                            <action
+                                string="Relations à traiter"
+                                name="%(humancapital.act_humancapital_linking_global)d"
+                                view_mode="tree,form"/>
+                            <action
+                                string="Demandes en cours"
+                                name="%(humancapital.act_humancapital_requests_global)d"
+                                view_mode="tree,form"/>
+                        </child1>
+                        <child2>
+                            <action
+                                string="Demandes sur les 30 derniers jours"
+                                name="%(humancapital.act_humancapital_requests_graph)d"
+                                view_mode="graph,tree"
+                                />
+
+                            <action
+                                string="Mises en relation sur les 30 derniers jours"
+                                name="%(humancapital.act_humancapital_linkings_graph)d"
+                                view_mode="graph,tree" />
+                        </child2>
+                     </hpaned>
+                 </form>
+             </field>
+         </record>
+
+
+        <record model="ir.actions.act_window" id="open_humancapital_maindashboard">
+            <field name="name">Document Dashboard</field>
+             <field name="res_model">board.board</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+
+            <field name="view_id" ref="humancapital_maindashboard_form"/>
+         </record>
+
+
+         <menuitem
+            name="Dashboard"
+            id="humancapital_maindashboard"
+            parent="menu_humancapital"
+            sequence="0"
+            action="open_humancapital_maindashboard"
+            />
+            
+<!--          <menuitem
+            name="Dashboard TEST"
+            id="humancapital_maindashboard_test1"
+            parent="menu_humancapital"
+            sequence="0"
+            action="act_humancapital_requests_graph"
+           />-->
+            
+            
+      </data>
+ </openerp>

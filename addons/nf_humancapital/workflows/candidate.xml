@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+		<record model="workflow" id="wkf_hc_candidate">
+		    <field name="name">humancapital.candidate</field>
+		    <field name="osv">res.partner</field>
+		    <field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_candidate_new">
+		    <field name="wkf_id" ref="wkf_hc_candidate" />
+		    <field name="flow_start">True</field>
+		    <field name="name">new</field>
+		    <field name="kind">function</field>
+		    <field name="action">candidate_new()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_candidate_questing">
+		    <field name="wkf_id" ref="wkf_hc_candidate" />
+		    <field name="name">questing</field>
+		    <field name="kind">function</field>
+		    <field name="action">candidate_questing()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_candidate_employedviachrysalys">
+		    <field name="wkf_id" ref="wkf_hc_candidate" />
+		    <field name="name">employedviachrysalys</field>
+		    <field name="kind">function</field>
+		    <field name="action">candidate_employedviachrysalys()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_candidate_employedviaother">
+		    <field name="wkf_id" ref="wkf_hc_candidate" />
+		    <field name="name">employedviaother</field>
+		    <field name="kind">function</field>
+		    <field name="action">candidate_employedviaother()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_candidate_surrender">
+		    <field name="wkf_id" ref="wkf_hc_candidate" />
+		    <field name="name">surrender</field>
+		    <field name="kind">function</field>
+		    <field name="action">candidate_surrender()</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_candidate_transition_1">
+		    <field name="act_from" ref="hc_act_candidate_new" />
+		    <field name="act_to" ref="hc_act_candidate_questing" />
+		    <field name="signal">hc_candidate_questing</field>
+		</record>
+		
+		<record model="workflow.transition" id="hc_candidate_transition_2">
+		    <field name="act_from" ref="hc_act_candidate_questing" />
+		    <field name="act_to" ref="hc_act_candidate_employedviachrysalys" />
+		    <field name="signal">hc_candidate_employedviachrysalys</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_candidate_transition_3">
+		    <field name="act_from" ref="hc_act_candidate_questing" />
+		    <field name="act_to" ref="hc_act_candidate_employedviaother" />
+		    <field name="signal">hc_candidate_employedviaother</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_candidate_transition_7">
+		    <field name="act_from" ref="hc_act_candidate_questing" />
+		    <field name="act_to" ref="hc_act_candidate_surrender" />
+		    <field name="signal">hc_candidate_surrender</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_candidate_transition_4">
+		    <field name="act_from" ref="hc_act_candidate_surrender" />
+		    <field name="act_to" ref="hc_act_candidate_questing" />
+		    <field name="signal">hc_candidate_requesting</field>
+		</record>
+		<record model="workflow.transition" id="hc_candidate_transition_5">
+		    <field name="act_from" ref="hc_act_candidate_employedviaother" />
+		    <field name="act_to" ref="hc_act_candidate_questing" />
+		    <field name="signal">hc_candidate_requesting</field>
+		</record>
+		<record model="workflow.transition" id="hc_candidate_transition_6">
+		    <field name="act_from" ref="hc_act_candidate_employedviachrysalys" />
+		    <field name="act_to" ref="hc_act_candidate_questing" />
+		    <field name="signal">hc_candidate_requesting</field>
+		</record>
+	</data>
+</openerp>

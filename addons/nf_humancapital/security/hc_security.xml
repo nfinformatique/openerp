@@ -1,0 +1,309 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="ir_model_access_hcuseradvert0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_advert"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_advert</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcusercomp0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_comparison"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_comp</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserfomations0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_formations"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_fomations</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcusercorrespondance0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_correspondance"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_correspondance</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcusercontacttypes0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_contracttypes"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_contacttypes</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserworkpermit0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_workpermits"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_workpermit</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcusersectors0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_sectors"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_sectors</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserrequest0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_request"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_request</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserregions0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_regions"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_regions</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserorigin0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_origin"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_origin</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcusernationalities0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_nationalities"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_nationalities</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserlinking0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_linking"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_linking</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserlanguages0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_languages"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_languages</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_hcuserfunctions0" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_functions"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_functions</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_groups_humancapitaluser1" model="res.groups">
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
+			<field name="name">Human Capital / User</field>
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[ref('humancapital.menu_humancapital'),ref('humancapital.menu_humancapital_advert'),ref('humancapital.menu_humancapital_request'),ref('humancapital.menu_humancapital_linking'),ref('humancapital.menu_humancapital_entreprise'),ref('humancapital.menu_humancapital_conf'),ref('humancapital.menu_humancapital_regions'),ref('humancapital.menu_humancapital_comparison'),ref('humancapital.menu_humancapital_languages'),ref('humancapital.menu_humancapital_functions'),ref('humancapital.menu_humancapital_formations'),ref('humancapital.menu_humancapital_workpermits'),ref('humancapital.menu_humancapital_contracttypes'),ref('humancapital.menu_humancapital_nationalities'),ref('humancapital.menu_humancapital_advertiser'),ref('humancapital.menu_humancapital_candidate'),ref('humancapital.menu_humancapital_sectors'),ref('humancapital.menu_humancapital_origin')])]" name="menu_access"/>
+		</record>
+		<record id="ir_model_access_hcuserrequestreport1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_request_report"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_request_report</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserlinkingreport1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_linking_report"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_linking_report</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuseradvert1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_advert"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_advert</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcusercomp1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_comparison"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_comp</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserfomations1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_formations"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_fomations</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcusercorrespondance1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_correspondance"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_correspondance</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcusercontacttypes1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_contracttypes"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_contacttypes</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserworkpermit1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_workpermits"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_workpermit</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcusersectors1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_sectors"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_sectors</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserrequest1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_request"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_request</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserregions1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_regions"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_regions</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserorigin1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_origin"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_origin</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcusernationalities1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_nationalities"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_nationalities</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserlinking1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_linking"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_linking</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserlanguages1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_languages"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_languages</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+		<record id="ir_model_access_hcuserfunctions1" model="ir.model.access">
+			<field name="model_id" ref="humancapital.model_humancapital_functions"/>
+			<field eval="1" name="perm_read"/>
+			<field name="name">hc_user_functions</field>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field model="res.groups" name="group_id" search="[('name', '=', u'Human Capital / User')]"/>
+		</record>
+	</data>
+</openerp>

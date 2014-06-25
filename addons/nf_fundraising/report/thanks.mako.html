@@ -1,0 +1,85 @@
+<html>
+<head>
+
+<style type="text/css">
+        ${css}
+
+html,body {
+	font-family: arial,sans-serif;
+    font-size:14px ! important;
+}
+.signature{
+	clear:both;
+	margin-left:9cm;
+}
+.embedded_img{
+	float: right;
+	margin-left: 8mm;
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+	max-width: 6cm;
+}
+
+    </style>
+</head>
+<body topmargin="0px">
+    <%page expression_filter="n"/>
+    <%
+    def carriage_returns(text):
+        return text.replace('\n', '<br />')
+    %>
+
+    %for o in objects:
+    	%for gift in o.gift_ids:
+	    
+    		%if gift.partner_id.nomail or gift.partner_id.anonymous or gift.partner_id.nothanks:
+				<% continue %>
+			%endif
+	    
+		    <% setLang(gift.partner_id.lang) %>
+		    <div class="main_container"  style="border: 0px solid green; padding-left: 15mm;padding-right: 15mm; position: relative; padding-top: 33mm; page-break-after:always;">
+			    	
+				<div style=" position:absolute;width:73mm; height: 36mm;  top: 11mm; left: 123mm; border: 0px solid red;">
+		          ${gift.partner_id.title and gift.partner_id.title.name or ''|entity} <br/>
+		          ${gift.partner_id.name|entity} ${gift.partner_id.prenom|entity}<br/>
+		          ${gift.partner_id.street|entity} <br/>
+		          ${gift.partner_id.street2 and gift.partner_id.street2+"<br/>" or ''|entity}
+		          ${gift.partner_id.zip|entity} ${gift.partner_id.city|entity}<br/>
+		          ${gift.partner_id.country_id.name or ''|entity}
+				</div>    
+				
+		        ${company.city}, le ${formatLang(o.date,date=True) or ''|entity}
+				
+				
+			    <h3  style="padding-top: 7mm; margin-bottom: 1.3cm;">
+			    	${_(o.intro_single) or ''|entity} CHF ${gift.amount} ${_('du')|entity} ${formatLang(gift.date,date=True)|entity} ${_(u'affecté à :')|entity}
+			    	%if len(gift.attribution_ids)==1:
+			    		${gift.attribution_ids[0].attribution_id.name|entity}
+			    	%else:
+				    	<ul>
+				    		%for attribution in gift.attribution_ids:
+				    			<li>${attribution.attribution_id.name|entity} : CHF ${attribution.amount|entity}</li>
+				    		%endfor
+				    	</ul> 
+				    %endif
+			    </h3>
+			    
+			    <img class="embedded_img" src="data:image/jpeg;base64,${o.image}"/>
+			    
+			    <div>
+			    	${o.main_text|n}
+			    </div>
+			    
+				<div class="signature">
+					${o.signature|n}
+				</div>
+			
+				${helper.embed_logo_by_name('camptocamp_logo') and False or ''|n}
+		
+		     </div> <!-- main container -->
+		 
+	    %endfor
+ 
+    %endfor
+</body>
+</html>

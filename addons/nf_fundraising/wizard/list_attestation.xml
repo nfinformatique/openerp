@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		
+		<record id="wiz_attestation_review" model="ir.ui.view">
+			<field name="name">nf_fundraising.attestation</field>
+			<field name="model">nf_fundraising.wiz.listattestation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Créer la liste des dons"
+					version="7.0">
+					<sheet>
+					    <div>
+					        Vous pouvez ici revoir les dons à inclure dans la lettre d'attestation. C'est le dernier moment pour en ajouter ou en retirer.
+					    </div>
+						<group>
+							<group>
+								<field name="gift_ids" domain="[('attestation_id','=',False),('state','=','valid')]" />
+							</group>
+						</group>
+
+						<button special="cancel" string="Annuler" type="object" />
+						<button name="action_validate" string="Valider la liste" type="object"
+							default_focus="1" />
+					</sheet>
+				</form>
+			</field>
+		</record>
+				
+		
+
+                <record id="attestation_act_window" model="ir.actions.act_window">
+                        <field name="name">Créer la liste des dons</field>
+                        <field name="type">ir.actions.act_window</field>
+                        <field name="res_model">nf_fundraising.wiz.listattestation</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">form</field>
+                        <field name="target">new</field>
+                        <field name="view_id" ref="wiz_attestation_review"></field>
+                </record>
+		
+		<record id="view_wiz_attestation_filter" model="ir.ui.view">
+			<field name="name">nf_fundraising.wiz.listattestation.select</field>
+			<field name="model">nf_fundraising.wiz.listattestation</field>
+			<field name="arch" type="xml">
+
+				<search string="Search">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

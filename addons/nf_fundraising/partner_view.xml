@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<!-- 'code_dp': fields.char(u'Code Donner Perfect',size=128,select=True), 
+			'donor': fields.boolean(u'Donateur'), 'anonymous': fields.boolean(u'Anonyme'), 
+			'nomail': fields.boolean(u'Pas de Courrier'), 'noemail': fields.boolean(u'Pas 
+			de Courriel'), 'dp_text': fields.text(u'Champ de texte Donor Perfect'), -->
+
+
+		<record model="ir.ui.view" id="view_res_partner_form">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook/page" position="after">
+						<page string="Donation" groups="nf_fundraising.fundraising_user">
+							<group>
+								<group>
+									<field name="donor" />
+									<field name="total_dons" />
+									<field name="dernier_don" />
+									<field name="nothanks" />
+									<field name="noattestation" />
+								</group>
+								<group>
+									<h2>Données provenant de DP:</h2>
+									<p></p>
+									<field name="anonymous" />
+									<field name="nomail" />
+									<field name="noemail" />
+									<field name="dp_pas_lettre" />
+									<field name="code_dp" attrs="{'readonly':[('code_dp','!=',False)]}" />
+								</group>
+
+							</group>
+							<label for="attribution_ids" />
+							<field name="attribution_ids" domain="[('state','!=','closed')]" />
+
+
+							<label for="solicitation_ids" />
+							<field name="solicitation_ids" />
+
+						</page>
+					</xpath>
+					<xpath expr="//sheet" position="before">
+						<header>
+							<button name="open_gift_view" type="object" string="Dons"
+								icon="gtk-justify-fill" />
+							<button name="open_attribution_view" type="object"
+								string="Attribution des dons" icon="gtk-justify-fill" />
+						</header>
+					</xpath>
+
+					<!-- <xpath expr="//group/group[2]" position="attributes" version="7.0" 
+						> -->
+					<!-- <attribute name="attrs"> {'readonly':['|',('code_dp','!=',False),('code_dp','!=','')]}</attribute> -->
+					<!-- </xpath> -->
+
+				</data>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_res_partner_tree">
+			<field name="name">res.partner.tree</field>
+			<field name="model">res.partner</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="base.view_partner_tree" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="name" position="after">
+						<field name="donor" />
+						<field name="total_dons" />
+						<field name="dernier_don" />
+					</field>
+				</data>
+			</field>
+		</record>
+
+
+		<record id="view_res_partner_filter_donor" model="ir.ui.view">
+			<field name="name">res.partner.select.donor</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_res_partner_filter" />
+
+			<field name="arch" type="xml">
+				<data>
+					<field name="name" position="after">
+				    
+						<field name="category_id" string="Catégories" />
+	
+						<field name="attribution_ids" string="Attributions" />
+						<filter name="donor" string="Donateur" domain="[('donor','=',True)]" />
+					</field>
+				</data>
+			</field>
+		</record>
+
+
+
+
+
+		<record model="ir.actions.act_window" id="action_res_partner_donor">
+			<field name="name">res_partner_donor</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_res_partner_filter" />
+			<field name="target">current</field>
+			<field name="context">{'default_customer':1,'default_supplier':0,'default_enfant':0,'default_donor':1,'search_default_donor':1}
+			</field>
+		</record>
+
+		<menuitem name="Donateurs" id="menu_fundraising_donors"
+			action="action_res_partner_donor" parent="menu_fundraising_fundraising"
+			sequence="10" />
+
+
+	</data>
+</openerp>

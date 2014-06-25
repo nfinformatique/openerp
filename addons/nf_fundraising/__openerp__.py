@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+{
+        "name" : "nf_fundraising",
+        "version" : "0.0.1",
+        "author" : "NF informatique Sàrl",
+        "website" : "http://www.nfinformatique.ch",
+        "category" : "Curstom",
+        "description": """  """,
+        "license":"AGPL-3",
+        "depends" : ['base', 'account', 'contacts', 'report_webkit'],
+        "data" : [
+                  "security/fundraising_security.xml",
+                  "security/ir.model.access.csv",
+                  "fundraising_view.xml",
+                  "attribution_view.xml",
+                  "gift_view.xml",
+                  "solicitation_view.xml",
+                  "partner_view.xml",
+                  "wizard/mass_attr.xml",
+                  "wizard/list_thanks.xml",
+                  "wizard/list_attestation.xml",
+                  "account_move_line_view.xml",
+                  "report/report_view.xml",
+                  "thanks_view.xml",
+                  "attestation_view.xml",
+                  ],
+        "demo" : [ ],
+        'css': ['static/style.css'],
+        "installable": True
+}

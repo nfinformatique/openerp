@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+		<record model="workflow" id="wkf_hc_request">
+		    <field name="name">humancapital.request</field>
+		    <field name="osv">humancapital.request</field>
+		    <field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_request_draft">
+		    <field name="wkf_id" ref="wkf_hc_request" />
+		    <field name="flow_start">True</field>
+		    <field name="name">draft</field>
+		    <field name="kind">function</field>
+		    <field name="action">request_draft()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_request_ongoing">
+		    <field name="wkf_id" ref="wkf_hc_request" />
+		    <field name="name">active</field>
+		    <field name="kind">function</field>
+		    <field name="action">request_ongoing()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_request_won">
+		    <field name="wkf_id" ref="wkf_hc_request" />
+		    <field name="name">won</field>
+		    <field name="kind">function</field>
+		    <field name="action">request_won()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_request_lost">
+		    <field name="wkf_id" ref="wkf_hc_request" />
+		    <field name="name">lost</field>
+		    <field name="kind">function</field>
+		    <field name="action">request_lost()</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_request_surrender">
+		    <field name="wkf_id" ref="wkf_hc_request" />
+		    <field name="name">surrender</field>
+		    <field name="kind">function</field>
+		    <field name="action">request_surrender()</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_request_transition_1">
+		    <field name="act_from" ref="hc_act_request_draft" />
+		    <field name="act_to" ref="hc_act_request_ongoing" />
+		    <field name="signal">hc_request_ongoing</field>
+		</record>
+		
+		<record model="workflow.transition" id="hc_request_transition_2">
+		    <field name="act_from" ref="hc_act_request_ongoing" />
+		    <field name="act_to" ref="hc_act_request_won" />
+		    <field name="signal">hc_request_won</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_request_transition_3">
+		    <field name="act_from" ref="hc_act_request_ongoing" />
+		    <field name="act_to" ref="hc_act_request_lost" />
+		    <field name="signal">hc_request_lost</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_request_transition_7">
+		    <field name="act_from" ref="hc_act_request_ongoing" />
+		    <field name="act_to" ref="hc_act_request_surrender" />
+		    <field name="signal">hc_request_surrender</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_request_transition_4">
+		    <field name="act_from" ref="hc_act_request_surrender" />
+		    <field name="act_to" ref="hc_act_request_ongoing" />
+		    <field name="signal">hc_request_desurrender</field>
+		</record>
+		<record model="workflow.transition" id="hc_request_transition_5">
+		    <field name="act_from" ref="hc_act_request_lost" />
+		    <field name="act_to" ref="hc_act_request_ongoing" />
+		    <field name="signal">hc_request_delost</field>
+		</record>
+		<record model="workflow.transition" id="hc_request_transition_6">
+		    <field name="act_from" ref="hc_act_request_won" />
+		    <field name="act_to" ref="hc_act_request_ongoing" />
+		    <field name="signal">hc_request_dewon</field>
+		</record>
+	</data>
+</openerp>

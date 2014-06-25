@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.actions.act_window" id="action_gifts">
+			<field name="name">Dons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_unclosed':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gifts_non_draft">
+			<field name="name">Dons non brouillons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_closed':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gifts_unthanked">
+			<field name="name">Dons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_unthanked':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gifts_thanked">
+			<field name="name">Dons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_thanked':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gifts_unattested">
+			<field name="name">Dons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_unattested':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gifts_attested">
+			<field name="name">Dons</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_attested':1}</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_gift_attribution">
+			<field name="name">Attributions effectuées</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.gift.attribution</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_closed':1}</field>
+		</record>
+
+		<menuitem name="Dons" id="menu_fundraising_gifts" parent="menu_fundraising_fundraising"
+			sequence="20" />
+		<menuitem name="Dons brouillons" id="menu_fundraising_gifts_draft"
+			action="action_gifts" parent="menu_fundraising_gifts" sequence="20" />
+		<menuitem name="Dons non remerciés" id="menu_fundraising_gifts_unthanked"
+			action="action_gifts_unthanked" parent="menu_fundraising_gifts"
+			sequence="30" />
+		<menuitem name="Dons non attestés" id="menu_fundraising_gifts_unattested"
+			action="action_gifts_unattested" parent="menu_fundraising_gifts"
+			sequence="40" />
+<!-- 		<menuitem name="Dons attestés" id="menu_fundraising_gifts_attested" -->
+<!-- 			action="action_gifts_attested" parent="menu_fundraising_gifts" -->
+<!-- 			sequence="45" /> -->
+<!-- 		<menuitem name="Dons remerciés" id="menu_fundraising_gifts_thanked" -->
+<!-- 			action="action_gifts_thanked" parent="menu_fundraising_gifts" -->
+<!-- 			sequence="35" /> -->
+		
+		<menuitem name="Attributions effectuées" id="menu_fundraising_gifts_attribution"
+			action="action_gift_attribution" parent="menu_fundraising_stats" 
+			sequence="120" />
+		<menuitem name="Tous les dons non brouillons" id="menu_fundraising_gifts_non_draft"
+			action="action_gifts_non_draft" parent="menu_fundraising_stats"
+			sequence="140" />
+
+
+		<!-- 'move_id': fields.many2one("account.move",u'Mouvement',ondelete="restrict"), 
+			'amount':fields.float("Montant total"), 'date': fields.date(u"Date",required=True), 
+			'partner_id':fields.many2one("res.partner","Partenaire",ondelete="restrict",select=True, 
+			required=True), 'attribution_ids': fields.one2many("nf_fundraising.gift.attribution","gift_id","Attributions",required=True), 
+			'solicitation_id': fields.many2one("nf_fundraising.solicitation","Solicitation"), 
+			'thanked': fields.boolean("Remercié"), 'attested': fields.boolean("Attesté"), -->
+
+		<record id="view_gift_tree" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.tree</field>
+			<field name="model">nf_fundraising.gift</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<tree string="Dons">
+
+
+					<field name="amount" sum="Montant" />
+					<field name="partner_id" />
+					<field name="date" />
+					<field name="journal_id" />
+					<field name="solicitation_id" />
+					<field name="attribution_ids" />
+					<field name="period_id" />
+					<field name="state" />
+
+
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_gift_form" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.form</field>
+			<field name="model">nf_fundraising.gift</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<form string="Don" version="7.0">
+					<header>
+						<button name="validate" type="object" states="draft"
+							string="Valider" icon="gtk-convert" />
+						<button name="set_draft" type="object" states="valid"
+							string="Mettre en brouillon" icon="gtk-convert" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,valid" />
+
+					</header>
+					<sheet>
+						<group>
+							<field name="journal_id" attrs="{'readonly':[('state','=','valid')]}"/>
+							<field name="date" attrs="{'readonly':[('state','=','valid')]}" />
+							<field name="amount" attrs="{'readonly':[('state','=','valid')]}" />
+							<field name="partner_id" attrs="{'readonly':[('state','=','valid')]}"
+								on_change="onchange_partner(partner_id,solicitation_id,attribution_ids)" />
+							<field name="solicitation_id" attrs="{'readonly':[('state','=','valid')]}"
+								domain="[('state','=','listed')]" on_change="onchange_sol(solicitation_id,attribution_ids,amount)" />
+							<field name="attribution_ids" attrs="{'readonly':[('state','=','valid')]}"
+								context="{'default_gift_id':active_id}">
+								<tree editable="bottom">
+									<field name="attribution_id" domain="[('state','!=','closed')]" />
+									<field name="amount" />
+								</tree>
+							</field>
+							<field name="move_id" readonly="True" />
+							<field name="thanks_id" readonly="True" />
+							<field name="attestation_id" readonly="True" />
+
+						</group>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_gift_filter" model="ir.ui.view">
+			<field name="name">nf_fundraising.gift.select</field>
+			<field name="model">nf_fundraising.gift</field>
+			<field name="arch" type="xml">
+
+				<search string="Search">
+					<field name="date" />
+					<field name="partner_id" />
+					<field name="attribution_ids" />
+					<field name="journal_id" />
+					<field name="solicitation_id" />
+					<filter name="unclosed" string="Brouillons" domain="[('state','!=','valid')]" />
+					<filter name="closed" string="Non brouillons" domain="[('state','=','valid')]" />
+					<filter name="unthanked" string="Non remerciés"
+						domain="[('thanks_id','=',False),('state','=','valid')]" />
+					<filter name="thanked" string="Remerciés" domain="[('thanks_id','!=',False)]" />
+					<filter name="unattested" string="Non attestés"
+						domain="[('attestation_id','=',False),('state','=','valid')]" />
+					<filter name="attested" string="Attestés"
+						domain="[('attestation_id','!=',False)]" />
+
+					<group expand="0" string="Group By...">
+						<filter string="Partner" icon="terp-partner" domain="[]"
+							context="{'group_by':'partner_id'}" />
+						<filter string="Période" icon="terp-partner" domain="[]"
+							context="{'group_by':'period_id'}" />
+						<filter string="Solicitation" icon="terp-partner" domain="[]"
+							context="{'group_by':'solicitation_id'}" />
+						<filter string="Journal" icon="terp-partner" domain="[]"
+							context="{'group_by':'journal_id'}" />
+					</group>
+
+
+
+				</search>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

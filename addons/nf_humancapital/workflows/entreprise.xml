@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+		<record model="workflow" id="wkf_hc_entreprise">
+		    <field name="name">humancapital.entreprise</field>
+		    <field name="osv">res.partner</field>
+		    <field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="hc_act_prospecting">
+		    <field name="wkf_id" ref="wkf_hc_entreprise" />
+		    <field name="flow_start">True</field>
+		    <field name="name">prospecting</field>
+		    <field name="kind">function</field>
+		    <field name="action">entreprise_prospecting()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_active">
+		    <field name="wkf_id" ref="wkf_hc_entreprise" />
+		    <field name="name">active</field>
+		    <field name="kind">function</field>
+		    <field name="action">entreprise_active()</field>
+		</record>
+		
+		<record model="workflow.activity" id="hc_act_inactive">
+		    <field name="wkf_id" ref="wkf_hc_entreprise" />
+		    <field name="name">inactive</field>
+		    <field name="kind">function</field>
+		    <field name="action">entreprise_inactive()</field>
+		</record>
+
+
+		<record model="workflow.transition" id="hc_entreprise_transition_1">
+		    <field name="act_from" ref="hc_act_prospecting" />
+		    <field name="act_to" ref="hc_act_active" />
+		    <field name="signal">hc_entreprise_activate</field>
+		</record>
+		
+		<record model="workflow.transition" id="hc_entreprise_transition_2">
+		    <field name="act_from" ref="hc_act_active" />
+		    <field name="act_to" ref="hc_act_inactive" />
+		    <field name="signal">hc_entreprise_inactivate</field>
+		</record>
+
+		<record model="workflow.transition" id="hc_entreprise_transition_3">
+		    <field name="act_from" ref="hc_act_inactive" />
+		    <field name="act_to" ref="hc_act_active" />
+		    <field name="signal">hc_entreprise_reactivate</field>
+		</record>
+
+
+	</data>
+</openerp>

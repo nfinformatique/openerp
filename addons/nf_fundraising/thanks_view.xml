@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.actions.act_window" id="action_thanks">
+			<field name="name">Remerciements</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nf_fundraising.thanks</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+			<field name="target">current</field>
+			<field name="context">{'search_default_unclosed':1}</field>
+		</record>
+
+		<menuitem name="Remerciements" id="menu_fundraising_thanks"
+			action="action_thanks" parent="menu_fundraising_fundraising"
+			sequence="10" />
+
+
+		<record id="view_thanks_tree" model="ir.ui.view">
+			<field name="name">nf_fundraising.thanks.tree</field>
+			<field name="model">nf_fundraising.thanks</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<tree string="Remerciements">
+					<field name="name" />
+					<field name="date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_thanks_form" model="ir.ui.view">
+			<field name="name">nf_fundraising.thanks.form</field>
+			<field name="model">nf_fundraising.thanks</field>
+			<field name="priority" eval="2" />
+			<field name="arch" type="xml">
+				<form string="Remerciements" version="7.0">
+					<header>
+						<button name="%(thanks_act_window)d" type="action" icon="gtk-new" string="Créer 
+							la liste" states="draft" />
+						 
+						<button name="open_list" type="object" string="Voir la liste"
+							icon="gtk-justify-fill" states="listed,printed" />
+						<button name="printit" type="object" string="Imprimer"
+							icon="gtk-justify-fill" states="listed" />
+						<button name="reprintit" type="object" string="Re-imprimer"
+							icon="gtk-justify-fill" states="printed" />
+<!-- 						<button name="reopen" type="object" string="Réouvrir" -->
+<!-- 							icon="gtk-justify-fill" states="printed" /> -->
+						<field name="state" widget="statusbar" statusbar_visible="draft,listed,printed"
+							statusbar_colors='{"draft":"red","listed":"blue"}' />
+
+					</header>
+					<sheet>
+						<group>
+							<field name="date"></field>
+							<field name="name"></field>
+							<field name="intro_single"></field>
+<!-- 							<field name="intro_multiple"></field>-->
+							<field name="main_text" />
+							<field name="signature" />
+							<field name="image" widget="image" />
+						</group>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_thanks_filter" model="ir.ui.view">
+			<field name="name">nf_fundraising.thanks.select</field>
+			<field name="model">nf_fundraising.thanks</field>
+			<field name="arch" type="xml">
+
+				<search string="Search">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+
+
+
+	</data>
+</openerp>

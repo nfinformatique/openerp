@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+                
+        <record id="thanks_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<head><style type="text/css">${css}</style></head><body style="border: 0px solid white; height: 30mm;">
+                <div style="font-size: 12px; color: darkblue; text-align: center; ">
+	                <!--${company.partner_id.name |entity} - -->${company.partner_id.street |entity} - ${company.partner_id.street2 and company.partner_id.street2+" - " or '' |entity}${company.partner_id.country_id and company.partner_id.country_id.code and company.partner_id.country_id.code+"-" or ''}${company.partner_id.zip |entity} ${company.partner_id.city |entity}<br/>
+	                T&eacute;l. : ${company.partner_id.phone |entity} - E-mail : ${company.partner_id.email |entity} - ${company.partner_id.website |entity} - CCP : 10-7269-1<br/>
+						<br/>			
+						&laquo;Pour des enfants qui rayonnent&raquo;            
+				</div>                 
+                </body>]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[
+                <html>
+    <head>        <style type="text/css">${css}</style>
+    
+                </head>
+      <body style="margin: 0;  border: 0px solid white;" >
+      			<div style="text-align: center; ">
+			    	<img style="height: 3cm; margin: 0 auto;" src="data:image/jpeg;base64,${company.logo}"/>
+      			</div>
+    </body>
+</html>]]>
+            </field>
+            <field eval="40.01" name="margin_top"/>
+            <field eval="25.0" name="margin_bottom"/>
+            <field eval="0.01" name="margin_left"/>
+            <field eval="0.01" name="margin_right"/>
+            <field name="css"><![CDATA[
+html,body{
+    margin: 0;
+    padding: 0;
+
+}    
+    ]]>
+            </field>
+            <field name="name">Thanks Header</field>
+        </record>        
+   
+    
+    <report id="nf_fundraising.thanks_report"
+            name="nf_fundraising.thanks.report"
+            auto="True"
+            multi="True"
+            model="nf_fundraising.thanks"
+            file="nf_fundraising/report/thanks.mako.html"
+            string="Remerciements"
+            webkit_header="thanks_header"
+            report_type="webkit"
+            attachment="(object.state in ('listed','printed')) and ('Thanks '+(str(object.id)+'.pdf' or ''))"
+            />
+    <report id="nf_fundraising.attestation_report"
+            name="nf_fundraising.attestation.report"
+            auto="True"
+            multi="True"
+            model="nf_fundraising.attestation"
+            file="nf_fundraising/report/attestation.mako.html"
+            string="Attestations"
+            webkit_header="thanks_header"
+            report_type="webkit"
+            attachment="(object.state in ('listed','printed')) and ('Attestation '+(str(object.id)+'.pdf' or ''))"
+            />
+    
+    
+  </data>
+  
+  
+</openerp>
