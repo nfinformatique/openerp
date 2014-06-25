@@ -1,0 +1,36 @@
+@media print {
+
+/*LAYOUT TRICKS*/
+        body{overflow:visible !important;}
+        table { page-break-inside:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+/*      tfoot { display:table-footer-group } /* this repeat footer on each page*/
+/*      tfoot { display:table-row-group } /* this noesn't repeat, but print at top of the table...*/
+        tfoot { display:none;} /* don'tm repeat footer */
+
+        tr.oe_webclient {
+                page-break-inside:auto;
+        }                                                                                                                                                                                  tbody>tr>th.oe_list_record_selector, thead>tr>th:first-child {
+                display: none ! important;
+        }
+        div.openerp_webclient_container, table.oe_webclient, table.oe_webclient>tbody, table.oe_webclient>tbody>tr, table.oe_webclient>tbody>tr>td,table.oe_webclient>tbody>tr>td>div, div.oe_view_manager_current, div.oe_view_manager_body, div.oe_view_manager_view_list, div.oe_list{
+                display: inline;
+        }
+
+/*SOME COLORS*/
+        table.oe_list_content>thead>tr>th{
+                background-color: #DDD;
+                border-bottom: 1px solid black;
+        }
+
+        tbody>tr:nth-child(2n+1) {
+                background-image: none ! important;
+                background-color: #EEE ! important;
+        }
+}
+@page {
+        size: landscape;
+        margin: 1cm;
+        margin-bottom: 1.5cm;
+}

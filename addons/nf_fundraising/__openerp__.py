@@ -4,7 +4,7 @@
         "version" : "0.0.1",
         "author" : "NF informatique Sàrl",
         "website" : "http://www.nfinformatique.ch",
-        "category" : "Curstom",
+        "category" : "Custom",
         "description": """  """,
         "license":"AGPL-3",
         "depends" : ['base', 'account', 'contacts', 'report_webkit'],
