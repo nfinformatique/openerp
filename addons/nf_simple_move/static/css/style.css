@@ -1,0 +1,11 @@
+table.wiz_simple_move{
+	margin: 20px;
+}
+
+
+table.wiz_simple_move td{
+	padding-left: 10px;
+}
+table.wiz_simple_move td:nth-child(3){
+	padding-left: 30px;
+}

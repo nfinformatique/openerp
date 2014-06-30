@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-extend="AccountMoveLineQuickAdd">
+        <t t-jquery="div.oe_account_quickadd div.oe_form_dropdown_section:first" t-operation="before">
+            <div class="oe_form_dropdown_section oe_simple_move">
+                <button type="button" class="oe_button oe_list_add oe_highlight">Create Simple Entries</button>
+            </div>
+            
+        </t>
+    </t>
+    
+</templates>

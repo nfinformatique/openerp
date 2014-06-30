@@ -2,3 +2,6 @@ eclipse.preferences.version=1
 encoding//nf_fundraising/__openerp__.py=utf-8
 encoding//nf_print/__init__.py=utf-8
 encoding//nf_print/__openerp__.py=utf-8
+encoding//nf_simple_move/__init__.py=utf-8
+encoding//nf_simple_move/__openerp__.py=utf-8
+encoding//nf_simple_move/wizard/simple_move.py=utf-8

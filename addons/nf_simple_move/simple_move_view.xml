@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+<!-- 		<menuitem name="Simple Move" id="menu_simple_move_main" parent="account.menu_finance_entries" groups="account.group_account_user,account.group_account_manager"
+			sequence="1" action="single_move_act_window"/>-->
+		
+	</data>
+</openerp>

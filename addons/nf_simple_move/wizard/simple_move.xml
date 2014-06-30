@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="wiz_simple_move" model="ir.ui.view">
+			<field name="name">nf_simple_move.single_move</field>
+			<field name="model">nf_simple_move.wiz.simple_move</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Créer une écriture simple" version="7.0">
+					<sheet>
+						<div>
+							Création d'une écriture (Spécial Fabienne)
+						</div>
+						<table class="wiz_simple_move">
+							<tbody>
+								<tr>
+									<td>
+										<label for="journal_id"></label>
+									</td>
+									<td>
+										<field name="journal_id" />
+									</td>
+									<td>
+										<label for="move_id"></label>
+									</td>
+									<td>
+										<field name="move_id" readonly="1" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="date"></label>
+									</td>
+									<td>
+										<field name="date" />
+									</td>
+									<td>
+										<label for="period_id"></label>
+									</td>
+									<td>
+										<field name="period_id" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="amount"></label>
+									</td>
+									<td>
+										<field name="amount"></field>
+									</td>
+									<td>
+										<label for="currency_id"></label>
+									</td>
+									<td>
+										<field name="currency_id" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="credit_account_id"></label>
+									</td>
+									<td>
+										<field name="credit_account_id" />
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+
+
+								<tr>
+									<td>
+										<label for="debit_account_id"></label>
+									</td>
+									<td>
+										<field name="debit_account_id" />
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td>
+										<label for="tax_id"></label>
+									</td>
+									<td>
+										<field name="tax_id" />
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+
+
+
+							</tbody>
+						</table>
+						<div style="text-align: right;">
+							<button name="action_validate_new" string="Valider et créer"
+								type="object" default_focus="1" />
+							<button name="action_validate_close" string="Valider et fermer"
+								type="object" default_focus="1" />
+							<button special="cancel" string="Annuler" type="object" />
+						</div>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.client" id="action_client_simple_move">
+			<field name="name">Simple move action</field>
+			<field name="tag">simple_move.open</field>
+		</record>
+		<menuitem action="action_client_simple_move" id="menu_client_open" />
+
+		<!-- <record id="single_move_act_window" model="ir.actions.act_window"> 
+			<field name="name">Créer une écriture simple</field> <field name="type">ir.actions.act_window</field> 
+			<field name="res_model">nf_simple_move.wiz.simple_move</field> <field name="view_type">form</field> 
+			<field name="view_mode">form</field> <field name="target">new</field> <field 
+			name="view_id" ref="wiz_simple_move"></field> </record> <record id="action_account_moves_all_a" 
+			model="ir.actions.act_window"> <field name="context">{'journal_type':'general'}</field> 
+			<field name="name">Journal Items</field> <field name="res_model">account.move.line</field> 
+			<field name="view_id" ref="view_move_line_tree"/> <field name="view_mode">tree_account_move_line_quickadd,form</field> 
+			<field name="help" type="html"> <p class="oe_view_nocontent_create"> Select 
+			the period and the journal you want to fill. </p><p> This view can be used 
+			by accountants in order to quickly record entries in OpenERP. If you want 
+			to record a supplier invoice, start by recording the line of the expense 
+			account. OpenERP will propose to you automatically the Tax related to this 
+			account and the counterpart "Account Payable". </p> </field> </record> <menuitem 
+			action="action_account_moves_all_a" icon="STOCK_JUSTIFY_FILL" id="menu_action_account_moves_all" 
+			parent="account.menu_finance_entries" sequence="1" groups="group_account_user" 
+			/> -->
+
+
+
+	</data>
+</openerp>

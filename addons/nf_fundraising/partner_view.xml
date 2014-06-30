@@ -107,7 +107,7 @@
 			<field name="res_model">res.partner</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="search_view_id" ref="view_res_partner_filter" />
+			<field name="search_view_id" ref="view_res_partner_filter_donor" />
 			<field name="target">current</field>
 			<field name="context">{'default_customer':1,'default_supplier':0,'default_enfant':0,'default_donor':1,'search_default_donor':1}
 			</field>
