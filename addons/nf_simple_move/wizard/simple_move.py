@@ -10,7 +10,7 @@ class simple_move(osv.osv_memory):
     _description="simple Move"
     _columns = {
                 'name': fields.char('Name', size=64, required=True),
-                'journal_id': fields.many2one("account.journal","Journal",required=True,domain=[('journal_type','=','general')]),
+                'journal_id': fields.many2one("account.journal","Journal",required=True),#,domain=[('journal_type','=','general')]),
                 'period_id': fields.many2one("account.period","Period",required=True),
                 'date': fields.date("Date",required=True),
                 'move_id': fields.many2one("account.move","Move"),
@@ -22,7 +22,13 @@ class simple_move(osv.osv_memory):
                 
                 }
     
+    def create(self,*arg,**kwargs):
+        print "COUCOU"
+        print arg
+        print kwargs
+    
     def _get_default_date(self,cr,uid,ids,context={}):
+        print context
         return None
     
     _defaults = {

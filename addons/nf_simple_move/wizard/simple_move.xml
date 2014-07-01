@@ -110,7 +110,7 @@
 			<field name="name">Simple move action</field>
 			<field name="tag">simple_move.open</field>
 		</record>
-		<menuitem action="action_client_simple_move" id="menu_client_open" />
+<!-- 		<menuitem action="action_client_simple_move" id="menu_client_open" />-->
 
 		<!-- <record id="single_move_act_window" model="ir.actions.act_window"> 
 			<field name="name">Créer une écriture simple</field> <field name="type">ir.actions.act_window</field> 
