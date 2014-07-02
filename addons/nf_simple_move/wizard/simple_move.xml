@@ -10,38 +10,84 @@
 				<form string="Créer une écriture simple" version="7.0">
 					<sheet>
 						<div>
-							Création d'une écriture (Spécial Fabienne)
+							Création d'une écriture simple
 						</div>
 						<table class="wiz_simple_move">
 							<tbody>
 								<tr>
-									<td>
-										<label for="journal_id"></label>
-									</td>
-									<td>
-										<field name="journal_id" />
-									</td>
 									<td>
 										<label for="move_id"></label>
 									</td>
 									<td>
 										<field name="move_id" readonly="1" />
 									</td>
+									<td>
+										<field name="company_id" readonly="1" invisible="1" />
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<label for="period_id"></label>
+									</td>
+									<td>
+										<field name="period_id" readonly="1" />
+									</td>
+									<td>
+										<label for="journal_id"></label>
+									</td>
+									<td>
+										<field name="journal_id" readonly="1" />
+									</td>
+								</tr>
+								<tr class="oe_simple_move_form_hr">
+
 								</tr>
 								<tr>
 									<td>
 										<label for="date"></label>
 									</td>
 									<td>
-										<field name="date" />
+										<field name="date" default_focus="1" on_change="on_change_date(date)" />
 									</td>
-									<td>
-										<label for="period_id"></label>
-									</td>
-									<td>
-										<field name="period_id" />
-									</td>
+
 								</tr>
+								<tr>
+									<td>
+										<label for="name"></label>
+									</td>
+									<td>
+										<field name="name" />
+									</td>
+
+								</tr>
+
+
+								<tr>
+									<td>
+										<label for="debit_account_id"></label>
+									</td>
+									<td>
+										<field name="debit_account_id"
+											domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]"
+											on_change="on_change_debit_account(debit_account_id,account_tax_id,context)" />
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<label for="credit_account_id"></label>
+									</td>
+									<td>
+										<field name="credit_account_id"
+											domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]"
+											on_change="on_change_credit_account(credit_account_id,account_tax_id,context)" />
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+
 								<tr>
 									<td>
 										<label for="amount"></label>
@@ -53,54 +99,37 @@
 										<label for="currency_id"></label>
 									</td>
 									<td>
-										<field name="currency_id" />
+										<field name="currency_id" invisible="not context.get('currency',False)"
+											modifiers="{'readonly': true, 'tree_invisible': true}" />
 									</td>
 								</tr>
-								<tr>
-									<td>
-										<label for="credit_account_id"></label>
-									</td>
-									<td>
-										<field name="credit_account_id" />
-									</td>
-									<td></td>
-									<td></td>
-								</tr>
-
 
 								<tr>
 									<td>
-										<label for="debit_account_id"></label>
+										<label for="account_tax_id"></label>
 									</td>
 									<td>
-										<field name="debit_account_id" />
+										<field name="account_tax_id" options="{'no_open':True}"
+											invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund','general']" />
 									</td>
 									<td></td>
 									<td></td>
 								</tr>
 
 								<tr>
-									<td>
-										<label for="tax_id"></label>
+									<td colspan="4">
+										<div style="text-align: right;">
+											<button name="action_validate_new" string="Valider et créer"
+												type="object" />
+											<button name="action_validate_close" string="Valider et fermer"
+												type="object" />
+											<button special="cancel" string="Annuler" type="object" />
+										</div>
 									</td>
-									<td>
-										<field name="tax_id" />
-									</td>
-									<td></td>
-									<td></td>
 								</tr>
-
-
 
 							</tbody>
 						</table>
-						<div style="text-align: right;">
-							<button name="action_validate_new" string="Valider et créer"
-								type="object" default_focus="1" />
-							<button name="action_validate_close" string="Valider et fermer"
-								type="object" default_focus="1" />
-							<button special="cancel" string="Annuler" type="object" />
-						</div>
 					</sheet>
 				</form>
 			</field>
@@ -110,7 +139,8 @@
 			<field name="name">Simple move action</field>
 			<field name="tag">simple_move.open</field>
 		</record>
-<!-- 		<menuitem action="action_client_simple_move" id="menu_client_open" />-->
+		<!-- <menuitem action="action_client_simple_move" id="menu_client_open" 
+			/> -->
 
 		<!-- <record id="single_move_act_window" model="ir.actions.act_window"> 
 			<field name="name">Créer une écriture simple</field> <field name="type">ir.actions.act_window</field> 

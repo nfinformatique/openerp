@@ -1,11 +1,7 @@
 openerp.nf_simple_move = function(instance){
-//	instance.web.client_actions.add('simple_move.open','instance.nf_simple_move.action');
-//	instance.nf_simple_move.action = instance.web.account.QuickAddListView.extend({
 	instance.web.account.QuickAddListView = instance.web.account.QuickAddListView.extend({
-//		className: 'oe_simple_move',
 		init: function(){
 			this._super.apply(this, arguments);
-//	    	return this._super();
 		},
 		start: function(){
             var tmp = this._super.apply(this, arguments);
@@ -14,17 +10,22 @@ openerp.nf_simple_move = function(instance){
 		},
 	    open_wizard: function () {
 	    	var self=this;
+	    	self.dataset.context=$.extend(self.dataset.context,{'current_journal':self.current_journal,'current_period':self.current_period})
+	    	var newwindow=undefined;
 	    	if (self.current_journal && self.current_period){
-		    	self.do_action({
+	    		newwindow=self.do_action({
+		    		name: _("Simple move"),
 	                type: 'ir.actions.act_window',
 	                res_model: 'nf_simple_move.wiz.simple_move',
 	//                res_id: self.get("value"),
 	                views: [[false, 'form']],
 	                target: 'new',
-	                //context: self.build_context().eval(),
-	                context: $.extend(self.dataset.context,{'current_journal':self.current_journal, 'current_period':self.current_period}),
+	                context: self.dataset.get_context(),
 	            });
-		    	debugger;
+	    		debugger;
+	    		self.ViewManager.views.tree_account_move_line_quickadd.reload_content();
+	            //SET Tabindex attribute to -1 on unuseful links
+	    		$('.oe_form table.wiz_simple_move .oe_form_uri, a.ui-dialog-titlebar-close, select.oe_debug_view').attr("tabindex","-1");
 	            return false;
 	    	}
 	    	return true;
@@ -41,22 +42,3 @@ openerp.nf_simple_move = function(instance){
 	
 	})
 }
-
-/*openerp. = function (instance) {
-    instance.web.client_actions.add('example.action', 'instance.web_example.Action');
-    instance.web_example.Action = instance.web.Widget.extend({
-        template: 'web_example.action',
-        events: {
-            'click .oe_web_example_start button': 'watch_start',
-            'click .oe_web_example_stop button': 'watch_stop'
-        },
-        watch_start: function () {
-            this.$el.addClass('oe_web_example_started')
-                    .removeClass('oe_web_example_stopped');
-        },
-        watch_stop: function () {
-            this.$el.removeClass('oe_web_example_started')
-                    .addClass('oe_web_example_stopped');
-        },
-    });
-};*/
