@@ -74,12 +74,14 @@ class simple_move(osv.osv_memory):
         
     def create_entries(self,cr,uid,ids,context={}):
         move_line_obj=self.pool.get("account.move.line")
+        modified_ids=[]
         for wiz in self.browse(cr,uid,ids,context=context):
             #create entry with debit
             move=wiz.move_id or False
             if move:
                 for line in move.line_id:
-                    line.unlink(cr,uid) 
+                    modified_ids.append(line.id)
+                    line.unlink(cr,uid)
             vals={
                   'name': wiz.name,
                   'debit':wiz.amount,
@@ -107,16 +109,19 @@ class simple_move(osv.osv_memory):
                   'account_tax_id':wiz.account_tax_id.id,
                   }
             id=move_line_obj.create(cr,uid,vals,context=context)
-            wiz.unlink(cr,uid)
-        return {}
+            modified_ids.append(map(lambda x:x.id,move.line_id))
+            
+            wiz.unlink()
+        return modified_ids
         
     def action_validate_close(self,cr,uid,ids,context={}):
-        self.create_entries(cr,uid,ids,context=context)
-        return { 'type': 'ir.actions.client', 'tag': 'reload' }
+        modified_ids=self.create_entries(cr,uid,ids,context=context)
+        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'modified_ids':modified_ids,'close':True} }
     
     def action_validate_new(self,cr,uid,ids,context={}):
-        self.create_entries(cr,uid,ids,context=context)
-        return { 'type': 'ir.actions.client', 'tag': 'reload' }
+        modified_ids=self.create_entries(cr,uid,ids,context=context)
+        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'modified_ids':modified_ids,'close':False} }
+#        return { 'type': 'ir.actions.client', 'tag': 'reload' }
     
     def on_change_date(self,cr,uid,ids,date,context={}):
         period_obj=self.pool.get("account.period")

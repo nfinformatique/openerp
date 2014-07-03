@@ -1,4 +1,16 @@
+
+
+
 openerp.nf_simple_move = function(instance){
+    instance.web.account.reload = function(parent,action){
+    	parent.inner_widget.views.tree_account_move_line_quickadd.controller.reload_content();
+    	parent.do_action({"type":"ir.actions.act_window_close"});
+    	if (! action.params.close){
+    		 parent.inner_widget.views.tree_account_move_line_quickadd.controller.open_wizard();
+    	}
+    }
+    instance.web.client_actions.add('simple_move.reload', 'instance.web.account.reload');
+	
 	instance.web.account.QuickAddListView = instance.web.account.QuickAddListView.extend({
 		init: function(){
 			this._super.apply(this, arguments);
@@ -22,8 +34,6 @@ openerp.nf_simple_move = function(instance){
 	                target: 'new',
 	                context: self.dataset.get_context(),
 	            });
-	    		debugger;
-	    		self.ViewManager.views.tree_account_move_line_quickadd.reload_content();
 	            //SET Tabindex attribute to -1 on unuseful links
 	    		$('.oe_form table.wiz_simple_move .oe_form_uri, a.ui-dialog-titlebar-close, select.oe_debug_view').attr("tabindex","-1");
 	            return false;
