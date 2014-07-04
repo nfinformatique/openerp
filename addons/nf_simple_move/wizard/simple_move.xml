@@ -70,10 +70,15 @@
 									<td>
 										<field name="debit_account_id"
 											domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]"
-											on_change="on_change_debit_account(debit_account_id,account_tax_id,context)" />
+											on_change="on_change_debit_account(debit_account_id,debit_tax_id,credit_tax_id,context)" />
 									</td>
-									<td></td>
-									<td></td>
+									<td>
+										<label for="debit_tax_id"></label>
+									</td>
+									<td>
+										<field name="debit_tax_id" options="{'no_open':True}"
+											invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund','general']" />
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -82,10 +87,15 @@
 									<td>
 										<field name="credit_account_id"
 											domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]"
-											on_change="on_change_credit_account(credit_account_id,account_tax_id,context)" />
+											on_change="on_change_credit_account(credit_account_id,debit_tax_id,credit_tax_id,context)" />
 									</td>
-									<td></td>
-									<td></td>
+									<td>
+										<label for="credit_tax_id"></label>
+									</td>
+									<td>
+										<field name="credit_tax_id" options="{'no_open':True}"
+											invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund','general']" />
+									</td>
 								</tr>
 
 								<tr>
@@ -102,18 +112,6 @@
 										<field name="currency_id" invisible="not context.get('currency',False)"
 											modifiers="{'readonly': true, 'tree_invisible': true}" />
 									</td>
-								</tr>
-
-								<tr>
-									<td>
-										<label for="account_tax_id"></label>
-									</td>
-									<td>
-										<field name="account_tax_id" options="{'no_open':True}"
-											invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund','general']" />
-									</td>
-									<td></td>
-									<td></td>
 								</tr>
 
 								<tr>
