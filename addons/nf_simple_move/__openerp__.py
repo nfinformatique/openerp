@@ -21,7 +21,7 @@
                "static/js/account_move_line_quickadd.extend.b.js",
                ],
         'qweb' : [
-            "static/xml/account_move_line_quickadd.extend.xml",
+#            "static/xml/account_move_line_quickadd.extend.xml",
         ],
         "installable": True
 }

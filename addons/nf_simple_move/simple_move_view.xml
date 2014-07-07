@@ -2,8 +2,21 @@
 <openerp>
 	<data>
 
-<!-- 		<menuitem name="Simple Move" id="menu_simple_move_main" parent="account.menu_finance_entries" groups="account.group_account_user,account.group_account_manager"
-			sequence="1" action="single_move_act_window"/>-->
-		
-	</data>
+
+		<record id="simple_move_act_window" model="ir.actions.act_window">
+			<field name="name">Simple moves</field>
+			<field name="context">{'journal_type':'general'}</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.move.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree_account_move_line_simple</field>
+			<field name="view_id" ref="account.view_move_line_tree"/>
+<!-- 			<field name="view_id" ref="wiz_simple_move"></field>-->
+		</record>
+
+		<menuitem name="Simple Move" id="menu_simple_move_main"
+			parent="account.menu_finance_entries" groups="account.group_account_user,account.group_account_manager"
+			sequence="1" action="simple_move_act_window" />
+			</data>
+			
 </openerp>

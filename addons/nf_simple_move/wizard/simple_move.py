@@ -4,6 +4,9 @@
 from openerp.osv import osv, fields
 from datetime import date,datetime
 import openerp.addons.decimal_precision as dp
+from openerp.tools.translate import _
+import time
+
 
 class simple_move(osv.osv_memory):
     _name="nf_simple_move.wiz.simple_move"
@@ -22,84 +25,7 @@ class simple_move(osv.osv_memory):
                 'debit_account_id': fields.many2one('account.account', 'Debit Account', required=True, ondelete="cascade", domain=[('type','<>','view'), ('type', '<>', 'closed')], select=2),
                 'company_id': fields.related('journal_id', 'company_id', type='many2one', relation='res.company', string='Company', store=False, readonly=True),
                 }
-    
-    def _get_default_date(self,cr,uid,context={}):
-        date=None
-        
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return move_line.move_id.date 
-            #get date from move
-        else:
-            period_obj=self.pool.get("account.period")
-            if 'journal_id' in context and 'period_id' in context:
-                cr.execute('''SELECT move_id, date FROM account_move_line
-                            WHERE journal_id = %s AND period_id = %s
-                             ORDER BY date DESC limit 1''', (context['journal_id'], context['period_id']))
-                res = cr.fetchone()
-                date = res and res[1] or period_obj.browse(cr, uid, context['period_id'], context=context).date_start
-            
-        return date
-    
-    def _get_default_journal(self,cr,uid,context={}):
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return move_line.move_id.journal_id.id 
-            #get date from move
-        
-        if 'journal_id' in context:
-            return context['journal_id']
-        return False
-    
-    def _get_default_company(self,cr,uid,context={}):
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return move_line.move_id.journal_id.company_id.id 
-            #get date from move
-        
-        if 'journal_id' in context:
-            return  self.pool.get("account.journal").browse(cr,uid,context['journal_id'],context=context).company_id.id
-        return False
-    
-    def _get_default_period(self,cr,uid,context={}):
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return move_line.move_id.period_id.id
-            #get date from move
-        
-        if 'period_id' in context:
-            return context['period_id']
-        return False
-    
-    def _get_default_credit_account(self,cr,uid,context={}):
-        return False
-    def _get_default_debit_account(self,cr,uid,context={}):
-        return False
-    def _get_default_amount(self,cr,uid,context={}):
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return 0.0
-#            return move_line.move_id.date 
-            #get date from move
-            
-    def _get_default_move(self,cr,uid,context={}):
-        if 'move_line_record_id' in context:
-            move_line_obj=self.pool.get("account.move.line")
-            move_line = move_line_obj.browse(cr,uid,context['move_line_record_id'])
-            return move_line.move_id.id 
-            #get date from move
-        
-    def _get_default_debit_tax(self,cr,uid,context={}):
-        return False
-    def _get_default_credit_tax(self,cr,uid,context={}):
-        return False
-    def _get_default_name(self,cr,uid,context={}):
-        return False
+
     def _get_default_alert(self,cr,uid,context={}):
         osv.except_osv(_('Do not use default fct') ,"Bad guy !")
         return False
@@ -130,13 +56,24 @@ class simple_move(osv.osv_memory):
             #get first untaxed line
             untaxed_line=False
             taxed_line=False
+            tax_line=False
             if len(move.line_id)>3:
-                osv.except_osv(_('This entry is not simple enough for me') ,"This entry is not simple enough for me!")
+                print "COUCOU"
+                raise osv.except_osv(_('This entry is not simple enough for me') ,"This entry is not simple enough for me!")
             for line in move.line_id:
                 if not line.account_tax_id and not line.tax_code_id:
                     untaxed_line=line
                 if line.account_tax_id and line.tax_code_id:
                     taxed_line=line
+                elif line.tax_code_id and not line.account_tax_id:
+                    tax_line=line
+                    
+            if len(move.line_id)==3 and (not tax_line or not taxed_line or not untaxed_line):
+                raise osv.except_osv(_('This entry is not simple enough for me') ,"This entry is not simple enough for me!")
+                    
+            if len(move.line_id)==2 and (tax_line or taxed_line):
+                raise osv.except_osv(_('This entry is not simple enough for me') ,"This entry is not simple enough for me!")
+                    
                     
             first_line=untaxed_line   
             second_line=taxed_line
@@ -205,15 +142,22 @@ class simple_move(osv.osv_memory):
         return True
         
     def create_entries(self,cr,uid,ids,context={}):
+        inittime=time.time()
+        print "1 : ",(time.time()-inittime)
+        
         move_line_obj=self.pool.get("account.move.line")
-        modified_ids=[]
+        deleted_line_ids=[]
+        created_line_ids=[]
+        print "101 : ",(time.time()-inittime)
         for wiz in self.browse(cr,uid,ids,context=context):
             #create entry with debit
             move=wiz.move_id or False
             if move:
                 for line in move.line_id:
-                    modified_ids.append(line.id)
+                    print "102 : ",(time.time()-inittime)
+                    deleted_line_ids.append(line.id)
                     line.unlink(context=context)
+            print "103 : ",(time.time()-inittime)
             vals={
                   'name': wiz.name,
                   'debit':wiz.amount,
@@ -226,9 +170,13 @@ class simple_move(osv.osv_memory):
                   'account_tax_id':wiz.debit_tax_id.id,
                   }
             id=move_line_obj.create(cr,uid,vals,context=context)
-            if not move:
-                move_line = move_line_obj.browse(cr,uid,id)
-                move=move_line.move_id
+            print "2 : ",(time.time()-inittime)
+            
+            #reload move (id of line changed
+            move_line = move_line_obj.browse(cr,uid,id)
+            print "201 : ",(time.time()-inittime)
+            move=move_line.move_id
+            print "202 : ",(time.time()-inittime)
             #create entry with credit
             vals={
                   'name': wiz.name,
@@ -241,19 +189,23 @@ class simple_move(osv.osv_memory):
                   'date':wiz.date,
                   'account_tax_id':wiz.credit_tax_id.id,
                   }
+            print "203 : ",(time.time()-inittime)
             id=move_line_obj.create(cr,uid,vals,context=context)
-            modified_ids.append(map(lambda x:x.id,move.line_id))
+            print "3 : ",(time.time()-inittime)
+            
+            created_line_ids=list(set(created_line_ids + (map(lambda x:x.id,move.line_id))))
             
             wiz.unlink()
-        return modified_ids
+        print "4 : ",(time.time()-inittime)
+        return {"deleted_line_ids":deleted_line_ids,'created_line_ids':created_line_ids}
         
     def action_validate_close(self,cr,uid,ids,context={}):
-        modified_ids=self.create_entries(cr,uid,ids,context=context)
-        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'modified_ids':modified_ids,'close':True} }
+        id_vals=self.create_entries(cr,uid,ids,context=context)
+        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'id_vals':id_vals,'close':True} }
     
     def action_validate_new(self,cr,uid,ids,context={}):
-        modified_ids=self.create_entries(cr,uid,ids,context=context)
-        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'modified_ids':modified_ids,'close':False} }
+        id_vals=self.create_entries(cr,uid,ids,context=context)
+        return { 'type': 'ir.actions.client', 'tag': 'simple_move.reload', 'params':{'id_vals':id_vals,'close':False} }
 #        return { 'type': 'ir.actions.client', 'tag': 'reload' }
     
 #     def action_cancel(self,cr,uid,ids,context={}):
