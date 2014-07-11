@@ -19,6 +19,7 @@
         'js': [
 #               "static/js/account_move_line_quickadd.extend.js",
                "static/js/account_move_line_quickadd.extend.b.js",
+               "static/js/date_format.extend.js",
                ],
         'qweb' : [
 #            "static/xml/account_move_line_quickadd.extend.xml",

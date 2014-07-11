@@ -3,6 +3,8 @@
 
 openerp.nf_simple_move = function(instance){
 	
+	openerp.nf_simple_move.date_extend(instance);
+
     instance.web.account.reload = function(parent,action){
 //    	debugger;
     	//parent.inner_widget.views.tree_account_move_line_simple.controller.reload_content();
